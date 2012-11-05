@@ -1,0 +1,187 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:padding="@dimen/padding_medium"
+    >
+
+    <include
+        android:id="@+id/actionbar"
+        layout="@layout/actionbar"/>
+
+    <include
+        android:id="@+id/searchbar"
+        layout="@layout/search" />
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/textScroller"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignLeft="@+id/searchbar"
+        android:layout_below="@+id/searchbar"
+        android:layout_marginTop="12dp"
+        android:background="#fff" 
+        android:theme="@style/Theme.rechnik">
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutHolder"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/box_blue"
+                android:freezesText="true"
+                android:orientation="vertical" >
+
+                <TextView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/resultTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:freezesText="true"
+                    android:padding="10dip"
+                    android:singleLine="false"
+                    android:textColor="#eee" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/box_green"
+                android:orientation="vertical" >
+
+                <TextView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/titleText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:freezesText="true"
+                    android:padding="10dip"
+                    android:singleLine="false"
+                    android:text="@string/meaning"
+                    android:textColor="#eee"
+                    android:textSize="@dimen/padding_large" />
+
+                <TextView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/resultText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:freezesText="true"
+                    android:padding="10dip"
+                    android:singleLine="false"
+                    android:textColor="#eee" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutSyn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/box_orange"
+                android:orientation="vertical" >
+
+                <TextView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/titleSyn"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:freezesText="true"
+                    android:padding="10dip"
+                    android:singleLine="false"
+                    android:text="@string/synonims"
+                    android:textColor="#eee"
+                    android:textSize="@dimen/padding_large" />
+
+                <TextView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/resultSyn"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:freezesText="true"
+                    android:padding="10dip"
+                    android:singleLine="false"
+                    android:textColor="#eee" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutError"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/box_red"
+                android:orientation="vertical" >
+
+                <TextView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/titleError"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dip"
+                    android:singleLine="false"
+                    android:text="@string/error"
+                    android:textColor="#eee"
+                    android:textSize="@dimen/padding_large" />
+
+                <TextView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/resultError"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:freezesText="true"
+                    android:padding="10dip"
+                    android:singleLine="false"
+                    android:textColor="#eee" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutMisspells"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/box_red"
+                android:orientation="vertical" >
+
+                <TextView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/titleMis"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dip"
+                    android:singleLine="false"
+                    android:text="@string/misspells"
+                    android:textColor="#eee"
+                    android:textSize="@dimen/padding_large" />
+
+                <TextView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/resultMis"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:freezesText="true"
+                    android:padding="10dip"
+                    android:singleLine="false"
+                    android:textColor="#eee" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchbar"
+        android:layout_centerHorizontal="true"
+        android:progressDrawable="@drawable/progress_bar_states" />
+
+</RelativeLayout>
