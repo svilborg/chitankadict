@@ -1,6 +1,8 @@
 
 h1. TODO
 
+h2. Phase 1
+
 -1. Progress bar- 
 -2. Misspelled words to show Correct Version of the Word- 
 3. Link to Original Site
@@ -11,5 +13,9 @@ h1. TODO
 -8. Meaning - none if missing-
 9. No Internet Check (java.net.UnknownHostException: Unable to resolve host "rechnik.chitanka.info": No address associated with hostname) 
 10. Fix fonts to be relative 
-11. eInk optimized (what does it mean ? Custom colors ...)
- 
+11. Clickable Synonyms 
+
+h2. Phase 2
+
+1. Widget 
+2. eInk optimized (what does it mean ? Custom colors ...)
