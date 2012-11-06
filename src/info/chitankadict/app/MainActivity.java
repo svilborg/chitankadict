@@ -1,7 +1,7 @@
 package info.chitankadict.app;
 
 import info.chitankadict.domain.Word;
-import info.chitankadict.parser.JsoupWordParser; 
+import info.chitankadict.parser.JsoupWordParser;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -13,17 +13,22 @@ import org.apache.http.protocol.HTTP;
 import org.jsoup.HttpStatusException;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockDialogFragment;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.ShareActionProvider;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -37,6 +42,8 @@ public class MainActivity extends SherlockActivity {
 
 	private Word currentWord = null;
 	private ShareActionProvider actionProvider = null;
+
+	boolean mIsLargeLayout;
 
 	private class DownloadImageTask extends AsyncTask<Object, Object, Object> {
 
@@ -103,18 +110,17 @@ public class MainActivity extends SherlockActivity {
 				cleanWord();
 
 				String searchWord = searchText.getText().toString();
-				
+
 				try {
 					searchWord = URLEncoder.encode(searchWord, HTTP.UTF_8);
 				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 				StringBuilder stringBuilder = new StringBuilder();
 				stringBuilder.append(HTTP_RECHNIK_URL);
 				stringBuilder.append(searchWord);
-				
+
 				new DownloadImageTask(stringBuilder.toString(), progress)
 						.execute();
 			}
@@ -146,7 +152,7 @@ public class MainActivity extends SherlockActivity {
 
 		shareIntent.setAction(Intent.ACTION_SEND);
 
-		if (currentWord != null) {
+		if (currentWord != null && currentWord.getTitle() != null) {
 			shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentWord.getTitle());
 
 			if (currentWord.getMeaning() != null) {
@@ -171,8 +177,49 @@ public class MainActivity extends SherlockActivity {
 			new DownloadImageTask(HTTP_RECHNIK_RANDOM_URL, progress).execute();
 
 			return true;
+		case R.id.menu_item_about:
+
+			showDialog();
+			return true;
 		}
 		return false;
+	}
+
+	void showDialog() {
+
+		final Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.about_dialog);
+		dialog.setTitle(R.string.menu_about);
+		dialog.setCancelable(true);
+
+		TextView text = (TextView) dialog.findViewById(R.id.resultAbout);
+		text.setText(Html.fromHtml(getText(R.string.dialog_about).toString()));
+
+		// set up button
+		Button button = (Button) dialog.findViewById(R.id.buttonAbout);
+		button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.cancel();
+			}
+		});
+
+		dialog.show();
+	}
+
+	public static class MyDialogFragment extends SherlockDialogFragment {
+		static MyDialogFragment newInstance() {
+			return new MyDialogFragment();
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View v = inflater.inflate(R.layout.about_dialog, container, false);
+			// View tv = v.findViewById(R.id.text);
+			// ((TextView)tv).setText("This is an instance of MyDialogFragment");
+			return v;
+		}
 	}
 
 	public void cleanWord() {
@@ -230,18 +277,18 @@ public class MainActivity extends SherlockActivity {
 		if (word.getMeaning() != null) {
 			resultText.setText(Html.fromHtml(word.getMeaning()).toString());
 			layoutText.setVisibility(View.VISIBLE);
-		} 
+		}
 
 		if (word.getTitle() != null) {
 			resultTitle.setText(Html.fromHtml(word.getTitle()).toString());
 			layoutTitle.setVisibility(View.VISIBLE);
-		} 
+		}
 
 		if (word.getMisspells() != null && !("").equals(word.getMisspells())) {
 
 			resultMis.setText(Html.fromHtml(word.getMisspells()).toString());
 			layoutMiss.setVisibility(View.VISIBLE);
-		} 
+		}
 
 		if (word.getSynonyms() != null && !word.getSynonyms().isEmpty()) {
 
@@ -261,8 +308,8 @@ public class MainActivity extends SherlockActivity {
 			}
 
 			layoutSyn.setVisibility(View.VISIBLE);
-		} 
-		
+		}
+
 		if (word.getError() > 0) {
 			if (word.getError() > 0) {
 				if (word.getError() == Word.WORD_NOT_FOUND) {
@@ -279,6 +326,6 @@ public class MainActivity extends SherlockActivity {
 			}
 
 			layoutError.setVisibility(View.VISIBLE);
-		} 
+		}
 	}
 }
