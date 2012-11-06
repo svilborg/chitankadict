@@ -5,16 +5,17 @@
         android:id="@+id/menu_item_random"
         android:icon="@drawable/ic_action_random"
         android:showAsAction="always"
-        android:title="@string/menu_random" 
+        android:title="@string/menu_random"
         android:titleCondensed="@string/menu_random_min"/>
     <item
         android:id="@+id/menu_item_share"
         android:actionProviderClass="com.actionbarsherlock.widget.ShareActionProvider"
         android:showAsAction="always"
         android:title="@string/menu_share"/>
-
     <item
-        android:id="@+id/menu_item_about" 
+        android:id="@+id/menu_item_about"
         android:showAsAction="always"
+        android:icon="@android:drawable/ic_dialog_info"
         android:title="@string/menu_about"/>
+
 </menu>

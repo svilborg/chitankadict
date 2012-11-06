@@ -1,5 +1,6 @@
+h1. Chitanka Dictionary
 
-h1. TODO
+Chitanka Dictionary - Online Bulgarian Dictionary Android
 
 h2. Phase 1
 
