@@ -13,7 +13,6 @@ import org.apache.http.protocol.HTTP;
 import org.jsoup.HttpStatusException;
 
 import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.app.SherlockDialogFragment;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -25,10 +24,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -70,7 +67,7 @@ public class MainActivity extends SherlockActivity {
 
 			this.progress.setVisibility(View.GONE);
 
-			Log.d("POST EXECUTE ==========", word.toString());
+			// Log.d("POST EXECUTE ==========", word.toString());
 		}
 
 		protected Object doInBackground(Object... params) {
@@ -102,8 +99,6 @@ public class MainActivity extends SherlockActivity {
 
 		progress.setVisibility(View.GONE);
 
-		cleanWord();
-
 		searchButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 
@@ -125,11 +120,39 @@ public class MainActivity extends SherlockActivity {
 						.execute();
 			}
 		});
+
+		if (savedInstanceState == null) {
+			// On Start Clear the Word
+			cleanWord();
+		} else {
+
+		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putSerializable("currentWord", currentWord);
+
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		Word currWord = (Word) savedInstanceState
+				.getSerializable("currentWord");
+
+		if (currWord == null) {
+			cleanWord();
+		} else {
+			loadWord(currWord);
+		}
+
+		super.onRestoreInstanceState(savedInstanceState);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
+		Log.i("onCreateOptionsMenu", "CALLEDDDDDDD !!!");
 		getSupportMenuInflater().inflate(R.menu.action_menu, menu);
 
 		// Set file with share history to the provider and set the share intent.
@@ -139,30 +162,41 @@ public class MainActivity extends SherlockActivity {
 		actionProvider
 				.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
 
+		assignShareIntent();
+
 		return true;
 	}
 
 	/**
-	 * Creates a sharing {@link Intent}.
+	 * Creates a sharing {@link Intent} and assign it to the Action Provider.
 	 * 
-	 * @return The sharing intent.
+	 * @return void
 	 */
-	private Intent createShareIntent() {
-		Intent shareIntent = new Intent();
+	private void assignShareIntent() {
 
-		shareIntent.setAction(Intent.ACTION_SEND);
+		if (actionProvider != null) {
+			Intent shareIntent = new Intent();
 
-		if (currentWord != null && currentWord.getTitle() != null) {
-			shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentWord.getTitle());
+			shareIntent.setAction(Intent.ACTION_SEND);
 
-			if (currentWord.getMeaning() != null) {
-				shareIntent.putExtra(Intent.EXTRA_TEXT,
-						Html.fromHtml(currentWord.getMeaning()).toString());
+			if (currentWord != null && currentWord.getTitle() != null) {
+				shareIntent.putExtra(Intent.EXTRA_SUBJECT,
+						currentWord.getTitle());
+
+				if (currentWord.getMeaning() != null) {
+					shareIntent.putExtra(Intent.EXTRA_TEXT,
+							Html.fromHtml(currentWord.getMeaning()).toString());
+				}
 			}
-		}
-		shareIntent.setType("text/plain");
+			shareIntent.setType("text/plain");
 
-		return shareIntent;
+			Log.d("Action Povider",
+					(actionProvider != null) ? actionProvider.toString()
+							: "NILL");
+
+			// set share
+			actionProvider.setShareIntent(shareIntent);
+		}
 	}
 
 	@Override
@@ -207,21 +241,6 @@ public class MainActivity extends SherlockActivity {
 		dialog.show();
 	}
 
-	public static class MyDialogFragment extends SherlockDialogFragment {
-		static MyDialogFragment newInstance() {
-			return new MyDialogFragment();
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View v = inflater.inflate(R.layout.about_dialog, container, false);
-			// View tv = v.findViewById(R.id.text);
-			// ((TextView)tv).setText("This is an instance of MyDialogFragment");
-			return v;
-		}
-	}
-
 	public void cleanWord() {
 		LinearLayout layoutTitle = (LinearLayout) findViewById(R.id.LinearLayoutTitle);
 		LinearLayout layoutText = (LinearLayout) findViewById(R.id.LinearLayoutText);
@@ -246,86 +265,92 @@ public class MainActivity extends SherlockActivity {
 		// set current Word
 		currentWord = word;
 
-		// set share
-		actionProvider.setShareIntent(createShareIntent());
+		if (currentWord != null) {
 
-		TextView resultTitle = (TextView) findViewById(R.id.resultTitle);
-		TextView resultText = (TextView) findViewById(R.id.resultText);
-		TextView resultMis = (TextView) findViewById(R.id.resultMis);
-		TextView resultSyn = (TextView) findViewById(R.id.resultSyn);
-		TextView resultError = (TextView) findViewById(R.id.resultError);
-
-		LinearLayout layoutTitle = (LinearLayout) findViewById(R.id.LinearLayoutTitle);
-		LinearLayout layoutText = (LinearLayout) findViewById(R.id.LinearLayoutText);
-		LinearLayout layoutMiss = (LinearLayout) findViewById(R.id.LinearLayoutMisspells);
-		LinearLayout layoutSyn = (LinearLayout) findViewById(R.id.LinearLayoutSyn);
-		LinearLayout layoutError = (LinearLayout) findViewById(R.id.LinearLayoutError);
-
-		// TODO : Refactor
-		layoutTitle.setVisibility(View.GONE);
-		layoutText.setVisibility(View.GONE);
-		layoutMiss.setVisibility(View.GONE);
-		layoutSyn.setVisibility(View.GONE);
-		layoutError.setVisibility(View.GONE);
-
-		final EditText searchText = (EditText) findViewById(R.id.searchText);
-
-		if (word.getName() != null) {
-			searchText.setText(word.getName());
-		}
-
-		if (word.getMeaning() != null) {
-			resultText.setText(Html.fromHtml(word.getMeaning()).toString());
-			layoutText.setVisibility(View.VISIBLE);
-		}
-
-		if (word.getTitle() != null) {
-			resultTitle.setText(Html.fromHtml(word.getTitle()).toString());
-			layoutTitle.setVisibility(View.VISIBLE);
-		}
-
-		if (word.getMisspells() != null && !("").equals(word.getMisspells())) {
-
-			resultMis.setText(Html.fromHtml(word.getMisspells()).toString());
-			layoutMiss.setVisibility(View.VISIBLE);
-		}
-
-		if (word.getSynonyms() != null && !word.getSynonyms().isEmpty()) {
-
-			ArrayList<String> synonyms = word.getSynonyms();
-
-			resultSyn.setText("");
-
-			for (Iterator<String> iterator = synonyms.iterator(); iterator
-					.hasNext();) {
-				String string = (String) iterator.next();
-
-				resultSyn.append(string);
-
-				if (iterator.hasNext()) {
-					resultSyn.append(",  ");
-				}
+			if (actionProvider != null) {
+				assignShareIntent();
 			}
 
-			layoutSyn.setVisibility(View.VISIBLE);
-		}
+			TextView resultTitle = (TextView) findViewById(R.id.resultTitle);
+			TextView resultText = (TextView) findViewById(R.id.resultText);
+			TextView resultMis = (TextView) findViewById(R.id.resultMis);
+			TextView resultSyn = (TextView) findViewById(R.id.resultSyn);
+			TextView resultError = (TextView) findViewById(R.id.resultError);
 
-		if (word.getError() > 0) {
+			LinearLayout layoutTitle = (LinearLayout) findViewById(R.id.LinearLayoutTitle);
+			LinearLayout layoutText = (LinearLayout) findViewById(R.id.LinearLayoutText);
+			LinearLayout layoutMiss = (LinearLayout) findViewById(R.id.LinearLayoutMisspells);
+			LinearLayout layoutSyn = (LinearLayout) findViewById(R.id.LinearLayoutSyn);
+			LinearLayout layoutError = (LinearLayout) findViewById(R.id.LinearLayoutError);
+
+			// TODO : Refactor
+			layoutTitle.setVisibility(View.GONE);
+			layoutText.setVisibility(View.GONE);
+			layoutMiss.setVisibility(View.GONE);
+			layoutSyn.setVisibility(View.GONE);
+			layoutError.setVisibility(View.GONE);
+
+			final EditText searchText = (EditText) findViewById(R.id.searchText);
+
+			if (word.getName() != null) {
+				searchText.setText(word.getName());
+			}
+
+			if (word.getMeaning() != null) {
+				resultText.setText(Html.fromHtml(word.getMeaning()).toString());
+				layoutText.setVisibility(View.VISIBLE);
+			}
+
+			if (word.getTitle() != null) {
+				resultTitle.setText(Html.fromHtml(word.getTitle()).toString());
+				layoutTitle.setVisibility(View.VISIBLE);
+			}
+
+			if (word.getMisspells() != null
+					&& !("").equals(word.getMisspells())) {
+
+				resultMis
+						.setText(Html.fromHtml(word.getMisspells()).toString());
+				layoutMiss.setVisibility(View.VISIBLE);
+			}
+
+			if (word.getSynonyms() != null && !word.getSynonyms().isEmpty()) {
+
+				ArrayList<String> synonyms = word.getSynonyms();
+
+				resultSyn.setText("");
+
+				for (Iterator<String> iterator = synonyms.iterator(); iterator
+						.hasNext();) {
+					String string = (String) iterator.next();
+
+					resultSyn.append(string);
+
+					if (iterator.hasNext()) {
+						resultSyn.append(",  ");
+					}
+				}
+
+				layoutSyn.setVisibility(View.VISIBLE);
+			}
+
 			if (word.getError() > 0) {
-				if (word.getError() == Word.WORD_NOT_FOUND) {
-					resultError.setText(R.string.WordNotFound);
-				} else if (word.getError() == Word.WORD_MISSPELLED) {
+				if (word.getError() > 0) {
+					if (word.getError() == Word.WORD_NOT_FOUND) {
+						resultError.setText(R.string.WordNotFound);
+					} else if (word.getError() == Word.WORD_MISSPELLED) {
 
-					String errorCorrect = word.getName()
-							+ " е грешно изписване на " + word.getCorrect();
+						String errorCorrect = word.getName()
+								+ " е грешно изписване на " + word.getCorrect();
 
-					resultError.setText(errorCorrect);
-				} else {
-					resultError.setText(R.string.HTTPError);
+						resultError.setText(errorCorrect);
+					} else {
+						resultError.setText(R.string.HTTPError);
+					}
 				}
-			}
 
-			layoutError.setVisibility(View.VISIBLE);
+				layoutError.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 }
