@@ -23,7 +23,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -66,8 +65,6 @@ public class MainActivity extends SherlockActivity {
 			loadWord(word);
 
 			this.progress.setVisibility(View.GONE);
-
-			// Log.d("POST EXECUTE ==========", word.toString());
 		}
 
 		protected Object doInBackground(Object... params) {
@@ -152,7 +149,6 @@ public class MainActivity extends SherlockActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		Log.i("onCreateOptionsMenu", "CALLEDDDDDDD !!!");
 		getSupportMenuInflater().inflate(R.menu.action_menu, menu);
 
 		// Set file with share history to the provider and set the share intent.
@@ -189,10 +185,6 @@ public class MainActivity extends SherlockActivity {
 				}
 			}
 			shareIntent.setType("text/plain");
-
-			Log.d("Action Povider",
-					(actionProvider != null) ? actionProvider.toString()
-							: "NILL");
 
 			// set share
 			actionProvider.setShareIntent(shareIntent);

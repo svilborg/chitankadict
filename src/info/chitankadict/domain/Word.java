@@ -175,5 +175,4 @@ public class Word implements Comparable<Word>, Serializable {
 		// sort descending by name
 		return another.name.compareTo(name);
 	}
-
 }
