@@ -187,7 +187,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/searchbar"
-        android:layout_centerHorizontal="true"
-        android:progressDrawable="@drawable/progress_bar_states" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

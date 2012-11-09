@@ -44,20 +44,15 @@
         <item name="background">@drawable/ab_solid_rechnik</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_rechnik</item>
         <item name="backgroundSplit">@drawable/ab_bottom_solid_rechnik</item>
-        <item name="progressBarStyle">@style/rechnik_ProgressBar</item>
 
         <item name="android:background">@drawable/ab_solid_rechnik</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_rechnik</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_rechnik</item>
-        <item name="android:progressBarStyle">@style/rechnik_ProgressBar</item>
     </style>
 
     <style name="rechnik_transparent_ActionBar" parent="@style/Widget.Sherlock.ActionBar">
-        <item name="background">@drawable/ab_transparent_rechnik</item>
-        <item name="progressBarStyle">@style/rechnik_ProgressBar</item>
-        
-        <item name="android:background">@drawable/ab_transparent_rechnik</item>
-        <item name="android:progressBarStyle">@style/rechnik_ProgressBar</item>
+        <item name="background">@drawable/ab_transparent_rechnik</item>        
+        <item name="android:background">@drawable/ab_transparent_rechnik</item> 
     </style>
 	
     <style name="rechnik_PopupMenu" parent="@style/Widget.Sherlock.ListPopupWindow">	
@@ -80,10 +75,6 @@
         <item name="android:background">@drawable/spinner_background_ab_rechnik</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_rechnik</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_rechnik</item>
-    </style>
-    
-    <style name="rechnik_ProgressBar" parent="@style/Widget.Sherlock.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_horizontal_rechnik</item>
     </style>
     
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
