@@ -4,7 +4,7 @@
     <item
         android:id="@+id/menu_item_random"
         android:icon="@android:drawable/ic_menu_help"
-        android:showAsAction="always"
+        android:showAsAction="always" 
         android:title="@string/menu_random"
         android:titleCondensed="@string/menu_random_min"/>
     <item
