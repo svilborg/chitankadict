@@ -25,7 +25,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -101,7 +100,7 @@ public class MainActivity extends SherlockActivity {
 
 		progress.setVisibility(View.GONE);
 
-		// Search word from Synomnym Link
+		// Search word from Synonym Link
 		if ((data != null)) {
 
 			String synWord = data.getQueryParameter("word");
