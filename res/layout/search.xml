@@ -10,7 +10,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:inputType="text" >
+        android:inputType="text" 
+        android:imeOptions="actionSearch">
     </EditText>
 
     <Button
