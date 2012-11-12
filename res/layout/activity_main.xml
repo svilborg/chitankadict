@@ -112,7 +112,8 @@
                     android:padding="10dip"
                     android:singleLine="false"
                     android:textColor="#eee"
-                    android:textSize="18dip" />
+                    android:textSize="18dip" 
+                    android:autoLink="web"/>
 
             </LinearLayout>
 

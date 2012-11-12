@@ -20,9 +20,12 @@ import com.actionbarsherlock.widget.ShareActionProvider;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -90,32 +93,38 @@ public class MainActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		Uri data = getIntent().getData();
+
 		final Button searchButton = (Button) findViewById(R.id.searchButton);
 		final EditText searchText = (EditText) findViewById(R.id.searchText);
 		final ProgressBar progress = (ProgressBar) findViewById(R.id.progressBar);
 
 		progress.setVisibility(View.GONE);
 
+		// Search word from Synomnym Link
+		if ((data != null)) {
+
+			String synWord = data.getQueryParameter("word");
+
+			searchText.setText(synWord);
+
+			String searchUrl = buildSearchUrl(searchText);
+
+			if (synWord != null) {
+				new DownloadImageTask(searchUrl, progress).execute();
+			}
+		}
+
 		searchButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 
 				cleanWord();
 
-				String searchWord = searchText.getText().toString();
+				String searchUrl = buildSearchUrl(searchText);
 
-				try {
-					searchWord = URLEncoder.encode(searchWord, HTTP.UTF_8);
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-
-				StringBuilder stringBuilder = new StringBuilder();
-				stringBuilder.append(HTTP_RECHNIK_URL);
-				stringBuilder.append(searchWord);
-
-				new DownloadImageTask(stringBuilder.toString(), progress)
-						.execute();
+				new DownloadImageTask(searchUrl, progress).execute();
 			}
+
 		});
 
 		if (savedInstanceState == null) {
@@ -124,6 +133,22 @@ public class MainActivity extends SherlockActivity {
 		} else {
 
 		}
+	}
+
+	private String buildSearchUrl(final EditText searchText) {
+		String searchWord = searchText.getText().toString();
+
+		try {
+			searchWord = URLEncoder.encode(searchWord, HTTP.UTF_8);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(HTTP_RECHNIK_URL);
+		stringBuilder.append(searchWord);
+
+		return stringBuilder.toString();
 	}
 
 	@Override
@@ -225,7 +250,7 @@ public class MainActivity extends SherlockActivity {
 		Button button = (Button) dialog.findViewById(R.id.buttonAbout);
 		button.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) { 
+			public void onClick(View v) {
 				dialog.cancel();
 			}
 		});
@@ -275,6 +300,8 @@ public class MainActivity extends SherlockActivity {
 			LinearLayout layoutSyn = (LinearLayout) findViewById(R.id.LinearLayoutSyn);
 			LinearLayout layoutError = (LinearLayout) findViewById(R.id.LinearLayoutError);
 
+			resultSyn.setMovementMethod(LinkMovementMethod.getInstance());
+
 			// TODO : Refactor
 			layoutTitle.setVisibility(View.GONE);
 			layoutText.setVisibility(View.GONE);
@@ -316,7 +343,10 @@ public class MainActivity extends SherlockActivity {
 						.hasNext();) {
 					String string = (String) iterator.next();
 
-					resultSyn.append(string);
+					string = "<a href='info.chitankadict.app://?word=" + string
+							+ "'>" + string + "</a>";
+
+					resultSyn.append(Html.fromHtml(string));
 
 					if (iterator.hasNext()) {
 						resultSyn.append(",  ");
