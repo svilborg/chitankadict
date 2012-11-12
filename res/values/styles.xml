@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- File created by the Android Action Bar Style Generator
+<!--
+     File created by the Android Action Bar Style Generator
 
      Copyright (C) 2012 readyState Software Ltd
 
@@ -18,14 +19,13 @@
 
 <resources>
 
-    <style name="Theme.rechnik" parent="@style/Theme.Sherlock.Light.DarkActionBar"> 
-        <item name="actionBarItemBackground">@drawable/selectable_background_rechnik</item> 
+    <style name="Theme.rechnik" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+        <item name="actionBarItemBackground">@drawable/selectable_background_rechnik</item>
         <item name="popupMenuStyle">@style/rechnik_PopupMenu</item>
         <item name="dropDownListViewStyle">@style/rechnik_DropDownListView</item>
         <item name="actionBarTabStyle">@style/rechnik_ActionBarTabStyle</item>
         <item name="actionDropDownStyle">@style/rechnik_DropDownNav</item>
         <item name="actionBarStyle">@style/rechnik_solid_ActionBar</item>
-
         <item name="android:actionBarItemBackground">@drawable/selectable_background_rechnik</item>
         <item name="android:popupMenuStyle">@style/rechnik_PopupMenu</item>
         <item name="android:dropDownListViewStyle">@style/rechnik_DropDownListView</item>
@@ -33,57 +33,52 @@
         <item name="android:actionDropDownStyle">@style/rechnik_DropDownNav</item>
         <item name="android:actionBarStyle">@style/rechnik_solid_ActionBar</item>
         <item name="android:panelBackground">@drawable/menu_hardkey_panel_rechnik</item>
-        
-                <!-- Light.DarkActionBar specific -->
+
+        <!-- Light.DarkActionBar specific -->
         <item name="actionBarWidgetTheme">@style/Theme.rechnik.widget</item>
         <item name="android:actionBarWidgetTheme">@style/Theme.rechnik.widget</item>
-
     </style>
 
     <style name="rechnik_solid_ActionBar" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
         <item name="background">@drawable/ab_solid_rechnik</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_rechnik</item>
         <item name="backgroundSplit">@drawable/ab_bottom_solid_rechnik</item>
-
         <item name="android:background">@drawable/ab_solid_rechnik</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_rechnik</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_rechnik</item>
     </style>
 
     <style name="rechnik_transparent_ActionBar" parent="@style/Widget.Sherlock.ActionBar">
-        <item name="background">@drawable/ab_transparent_rechnik</item>        
-        <item name="android:background">@drawable/ab_transparent_rechnik</item> 
+        <item name="background">@drawable/ab_transparent_rechnik</item>
+        <item name="android:background">@drawable/ab_transparent_rechnik</item>
     </style>
-	
-    <style name="rechnik_PopupMenu" parent="@style/Widget.Sherlock.ListPopupWindow">	
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_rechnik</item>	
+
+    <style name="rechnik_PopupMenu" parent="@style/Widget.Sherlock.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_rechnik</item>
     </style>
-	
+
     <style name="rechnik_DropDownListView" parent="@style/Widget.Sherlock.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_rechnik</item>
     </style>
 
     <style name="rechnik_ActionBarTabStyle" parent="@style/Widget.Sherlock.ActionBar.TabView">
         <item name="background">@drawable/tab_indicator_ab_rechnik</item>
-
         <item name="android:background">@drawable/tab_indicator_ab_rechnik</item>
     </style>
-	
+
     <style name="rechnik_DropDownNav" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
         <item name="background">@drawable/spinner_background_ab_rechnik</item>
-
         <item name="android:background">@drawable/spinner_background_ab_rechnik</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_rechnik</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_rechnik</item>
     </style>
-    
+
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
     <style name="Theme.rechnik.widget" parent="@style/Theme.Sherlock">
         <item name="popupMenuStyle">@style/rechnik_PopupMenu</item>
         <item name="dropDownListViewStyle">@style/rechnik_DropDownListView</item>
-        
         <item name="android:popupMenuStyle">@style/rechnik_PopupMenu</item>
         <item name="android:dropDownListViewStyle">@style/rechnik_DropDownListView</item>
     </style>
- 
+
 </resources>
