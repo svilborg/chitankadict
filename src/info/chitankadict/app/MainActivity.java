@@ -318,12 +318,7 @@ public class MainActivity extends SherlockActivity {
 
 			resultSyn.setMovementMethod(LinkMovementMethod.getInstance());
 
-			// TODO : Refactor
-			layoutTitle.setVisibility(View.GONE);
-			layoutText.setVisibility(View.GONE);
-			layoutMiss.setVisibility(View.GONE);
-			layoutSyn.setVisibility(View.GONE);
-			layoutError.setVisibility(View.GONE);
+			cleanWord();
 
 			final EditText searchText = (EditText) findViewById(R.id.searchText);
 
