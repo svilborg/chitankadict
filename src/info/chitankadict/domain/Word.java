@@ -7,6 +7,7 @@ public class Word implements Comparable<Word>, Serializable {
 
 	public static final int WORD_NOT_FOUND = 1;
 	public static final int WORD_MISSPELLED = 2;
+	public static final int NO_INTERNET = 3;
 
 	private static final long serialVersionUID = 188899988812L;
 
