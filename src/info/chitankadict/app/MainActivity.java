@@ -90,40 +90,6 @@ public class MainActivity extends SherlockActivity {
 			return result;
 		}
 	}
-	
-	public void showErrorDialogue () {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-				getApplicationContext());
- 
-			// set title
-			alertDialogBuilder.setTitle("Problem");
- 
-			// set dialog message
-			alertDialogBuilder
-				.setMessage("Network Connection Problem!")
-				.setCancelable(false)
-				;
-//				.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-//					public void onClick(DialogInterface dialog,int id) {
-//						// if this button is clicked, close
-//						// current activity
-//						MainActivity.this.finish();
-//					}
-//				  })
-//				.setNegativeButton("No",new DialogInterface.OnClickListener() {
-//					public void onClick(DialogInterface dialog,int id) {
-//						// if this button is clicked, just close
-//						// the dialog box and do nothing
-//						dialog.cancel();
-//					}
-//				});
- 
-				// create alert dialog
-				AlertDialog alertDialog = alertDialogBuilder.create();
- 
-				// show it
-				alertDialog.show();
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -297,6 +263,7 @@ public class MainActivity extends SherlockActivity {
 
 		TextView text = (TextView) dialog.findViewById(R.id.resultAbout);
 		text.setText(Html.fromHtml(getText(R.string.dialog_about).toString()));
+		text.setMovementMethod(LinkMovementMethod.getInstance());
 
 		// set up button
 		Button button = (Button) dialog.findViewById(R.id.buttonAbout);
