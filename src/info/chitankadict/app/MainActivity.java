@@ -18,7 +18,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.ShareActionProvider;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -212,7 +211,7 @@ public class MainActivity extends SherlockActivity {
 	 * @return void
 	 */
 	private void assignShareIntent() {
-
+ 
 		if (actionProvider != null) {
 			Intent shareIntent = new Intent();
 
