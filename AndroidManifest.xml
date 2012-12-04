@@ -1,19 +1,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.chitankadict.app"
     android:versionCode="1"
-    android:versionName="1.0">
+    android:versionName="1.0" >
 
     <uses-sdk
+        android:maxSdkVersion="17"
         android:minSdkVersion="7"
-        android:maxSdkVersion="17" 
-        android:targetSdkVersion="17" /> 
+        android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.rechnik">
+        android:theme="@style/Theme.rechnik" >
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
@@ -22,12 +23,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="info.chitankadict.app" /> 
-            </intent-filter>            
+
+                <data android:scheme="info.chitankadict.app" />
+            </intent-filter>
         </activity>
     </application>
+
 </manifest>
