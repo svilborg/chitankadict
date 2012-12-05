@@ -26,7 +26,7 @@
             android:padding="28dp"
             android:singleLine="false"
             android:text="@string/dialog_about"
-            android:textSize="18dip" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout

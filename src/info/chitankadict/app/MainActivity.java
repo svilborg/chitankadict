@@ -19,6 +19,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.ShareActionProvider;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -34,6 +35,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView; 
+import android.view.inputmethod.InputMethodManager; 
 
 public class MainActivity extends SherlockActivity {
 
@@ -123,10 +125,12 @@ public class MainActivity extends SherlockActivity {
 				cleanWord();
 
 				String searchUrl = buildSearchUrl(searchText);
-
+				
+				InputMethodManager inputManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0); 
+				
 				new DownloadImageTask(searchUrl, progress).execute();
 			}
-
 		});
 		
 		searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {		
@@ -136,6 +140,9 @@ public class MainActivity extends SherlockActivity {
 					cleanWord();
 
 					String searchUrl = buildSearchUrl(searchText);
+					
+					InputMethodManager inputManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+					inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0); 
 
 					new DownloadImageTask(searchUrl, progress).execute();
 		            return true;
