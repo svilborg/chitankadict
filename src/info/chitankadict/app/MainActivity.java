@@ -153,7 +153,6 @@ public class MainActivity extends SherlockActivity {
 		layout.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				hideKeyboard();
 			}
 		});
@@ -241,16 +240,21 @@ public class MainActivity extends SherlockActivity {
 			shareIntent.setAction(Intent.ACTION_SEND);
 
 			if (currentWord != null && currentWord.getTitle() != null) {
-				shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentWord.getTitle());
+				final String caption = getResources().getString(R.string.word)  + ":" + currentWord.getName();
+				
+				shareIntent.putExtra(Intent.EXTRA_SUBJECT, caption);
 
 				if (currentWord.getMeaning() != null) {
-					shareIntent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(currentWord.getMeaning()).toString());
+					shareIntent.putExtra(Intent.EXTRA_TEXT, currentWord.getName() + " - " + Html.fromHtml(currentWord.getMeaning()).toString());
 				}
+				else if(currentWord.getTitle() != null) {
+					shareIntent.putExtra(Intent.EXTRA_TEXT, currentWord.getName() + " - " + Html.fromHtml(currentWord.getTitle()).toString());
+				}
+				shareIntent.setType("text/plain");
+				
+				// set share
+				actionProvider.setShareIntent(shareIntent);
 			}
-			shareIntent.setType("text/plain");
-
-			// set share
-			actionProvider.setShareIntent(shareIntent);
 		}
 	}
 
