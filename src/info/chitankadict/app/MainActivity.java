@@ -34,8 +34,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView; 
-import android.view.inputmethod.InputMethodManager; 
+import android.widget.TextView;
+import android.view.inputmethod.InputMethodManager;
 
 public class MainActivity extends SherlockActivity {
 
@@ -47,13 +47,13 @@ public class MainActivity extends SherlockActivity {
 
 	boolean mIsLargeLayout;
 
-	private class DownloadImageTask extends AsyncTask<Object, Object, Object> {
+	private class TranslateTask extends AsyncTask<Object, Object, Object> {
 
 		private String url;
 
 		private ProgressBar progress = null;
 
-		public DownloadImageTask(String url, final ProgressBar progress) {
+		public TranslateTask(String url, final ProgressBar progress) {
 			super();
 
 			this.url = url;
@@ -115,7 +115,7 @@ public class MainActivity extends SherlockActivity {
 			String searchUrl = buildSearchUrl(searchText);
 
 			if (synWord != null) {
-				new DownloadImageTask(searchUrl, progress).execute();
+				new TranslateTask(searchUrl, progress).execute();
 			}
 		}
 
@@ -125,30 +125,37 @@ public class MainActivity extends SherlockActivity {
 				cleanWord();
 
 				String searchUrl = buildSearchUrl(searchText);
-				
-				InputMethodManager inputManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-				inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0); 
-				
-				new DownloadImageTask(searchUrl, progress).execute();
+
+				hideKeyboard();
+
+				new TranslateTask(searchUrl, progress).execute();
 			}
 		});
-		
-		searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {		
-		    @Override
-		    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-		        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+		searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 					cleanWord();
 
 					String searchUrl = buildSearchUrl(searchText);
-					
-					InputMethodManager inputManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-					inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0); 
 
-					new DownloadImageTask(searchUrl, progress).execute();
-		            return true;
-		        }
-		        return false;
-		    }
+					hideKeyboard();
+
+					new TranslateTask(searchUrl, progress).execute();
+					return true;
+				}
+				return false;
+			}
+		});
+
+		LinearLayout layout = (LinearLayout) findViewById(R.id.LinearLayoutHolder);
+		layout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				hideKeyboard();
+			}
 		});
 
 		if (savedInstanceState == null) {
@@ -157,6 +164,17 @@ public class MainActivity extends SherlockActivity {
 		} else {
 
 		}
+	}
+	
+//	  @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//		hideKeyboard();
+//        return true;
+//    }
+	
+	private void hideKeyboard() {
+		InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 	}
 
 	private String buildSearchUrl(final EditText searchText) {
@@ -184,8 +202,7 @@ public class MainActivity extends SherlockActivity {
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		Word currWord = (Word) savedInstanceState
-				.getSerializable("currentWord");
+		Word currWord = (Word) savedInstanceState.getSerializable("currentWord");
 
 		if (currWord == null) {
 			cleanWord();
@@ -204,8 +221,7 @@ public class MainActivity extends SherlockActivity {
 		MenuItem actionItem = menu.findItem(R.id.menu_item_share);
 
 		actionProvider = (ShareActionProvider) actionItem.getActionProvider();
-		actionProvider
-				.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
+		actionProvider.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
 
 		assignShareIntent();
 
@@ -218,19 +234,17 @@ public class MainActivity extends SherlockActivity {
 	 * @return void
 	 */
 	private void assignShareIntent() {
- 
+
 		if (actionProvider != null) {
 			Intent shareIntent = new Intent();
 
 			shareIntent.setAction(Intent.ACTION_SEND);
 
 			if (currentWord != null && currentWord.getTitle() != null) {
-				shareIntent.putExtra(Intent.EXTRA_SUBJECT,
-						currentWord.getTitle());
+				shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentWord.getTitle());
 
 				if (currentWord.getMeaning() != null) {
-					shareIntent.putExtra(Intent.EXTRA_TEXT,
-							Html.fromHtml(currentWord.getMeaning()).toString());
+					shareIntent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(currentWord.getMeaning()).toString());
 				}
 			}
 			shareIntent.setType("text/plain");
@@ -249,7 +263,7 @@ public class MainActivity extends SherlockActivity {
 
 			progress.setVisibility(View.GONE);
 
-			new DownloadImageTask(HTTP_RECHNIK_RANDOM_URL, progress).execute();
+			new TranslateTask(HTTP_RECHNIK_RANDOM_URL, progress).execute();
 
 			return true;
 		case R.id.menu_item_about:
@@ -345,11 +359,9 @@ public class MainActivity extends SherlockActivity {
 				layoutTitle.setVisibility(View.VISIBLE);
 			}
 
-			if (word.getMisspells() != null
-					&& !("").equals(word.getMisspells())) {
+			if (word.getMisspells() != null && !("").equals(word.getMisspells())) {
 
-				resultMis
-						.setText(Html.fromHtml(word.getMisspells()).toString());
+				resultMis.setText(Html.fromHtml(word.getMisspells()).toString());
 				layoutMiss.setVisibility(View.VISIBLE);
 			}
 
@@ -359,12 +371,10 @@ public class MainActivity extends SherlockActivity {
 
 				resultSyn.setText("");
 
-				for (Iterator<String> iterator = synonyms.iterator(); iterator
-						.hasNext();) {
+				for (Iterator<String> iterator = synonyms.iterator(); iterator.hasNext();) {
 					String string = (String) iterator.next();
 
-					string = "<a href='info.chitankadict.app://?word=" + string
-							+ "'>" + string + "</a>";
+					string = "<a href='info.chitankadict.app://?word=" + string + "'>" + string + "</a>";
 
 					resultSyn.append(Html.fromHtml(string));
 
@@ -382,8 +392,7 @@ public class MainActivity extends SherlockActivity {
 						resultError.setText(R.string.WordNotFound);
 					} else if (word.getError() == Word.WORD_MISSPELLED) {
 
-						String errorCorrect = word.getName()
-								+ " е грешно изписване на " + word.getCorrect();
+						String errorCorrect = word.getName() + " е грешно изписване на " + word.getCorrect();
 
 						resultError.setText(errorCorrect);
 					} else {
