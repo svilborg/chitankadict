@@ -80,9 +80,7 @@ public class MainActivity extends SherlockActivity {
 			try {
 				result = jsoup.parse();
 			} catch (HttpStatusException e) {
-
 				result.setError(Word.WORD_NOT_FOUND);
-
 			} catch (IOException e) {
 				e.printStackTrace();
 				result.setError(Word.NO_INTERNET);
@@ -164,13 +162,7 @@ public class MainActivity extends SherlockActivity {
 
 		}
 	}
-	
-//	  @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//		hideKeyboard();
-//        return true;
-//    }
-	
+
 	private void hideKeyboard() {
 		InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
@@ -229,7 +221,7 @@ public class MainActivity extends SherlockActivity {
 
 	/**
 	 * Creates a sharing {@link Intent} and assign it to the Action Provider.
-	 * 
+	 *
 	 * @return void
 	 */
 	private void assignShareIntent() {
@@ -240,18 +232,17 @@ public class MainActivity extends SherlockActivity {
 			shareIntent.setAction(Intent.ACTION_SEND);
 
 			if (currentWord != null && currentWord.getTitle() != null) {
-				final String caption = getResources().getString(R.string.word)  + ":" + currentWord.getName();
-				
+				final String caption = getResources().getString(R.string.word) + ":" + currentWord.getName();
+
 				shareIntent.putExtra(Intent.EXTRA_SUBJECT, caption);
 
 				if (currentWord.getMeaning() != null) {
 					shareIntent.putExtra(Intent.EXTRA_TEXT, currentWord.getName() + " - " + Html.fromHtml(currentWord.getMeaning()).toString());
-				}
-				else if(currentWord.getTitle() != null) {
+				} else if (currentWord.getTitle() != null) {
 					shareIntent.putExtra(Intent.EXTRA_TEXT, currentWord.getName() + " - " + Html.fromHtml(currentWord.getTitle()).toString());
 				}
 				shareIntent.setType("text/plain");
-				
+
 				// set share
 				actionProvider.setShareIntent(shareIntent);
 			}
@@ -317,7 +308,7 @@ public class MainActivity extends SherlockActivity {
 
 	/**
 	 * Applies a Word to the UI
-	 * 
+	 *
 	 * @param word
 	 */
 	public void loadWord(Word word) {
