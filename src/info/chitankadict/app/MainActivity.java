@@ -26,8 +26,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -88,9 +86,7 @@ public class MainActivity extends SherlockActivity {
 			try {
 				result = jsoup.parse();
 			} catch (HttpStatusException e) {
-
 				result.setError(Word.WORD_NOT_FOUND);
-
 			} catch (IOException e) {
 				e.printStackTrace();
 				result.setError(Word.NO_INTERNET);
@@ -248,14 +244,14 @@ public class MainActivity extends SherlockActivity {
 			shareIntent.setAction(Intent.ACTION_SEND);
 
 			if (currentWord != null && currentWord.getTitle() != null) {
-				final String caption = getResources().getString(R.string.word)  + ":" + currentWord.getName();
+
+				final String caption = getResources().getString(R.string.word) + ":" + currentWord.getName();
 
 				shareIntent.putExtra(Intent.EXTRA_SUBJECT, caption);
 
 				if (currentWord.getMeaning() != null) {
 					shareIntent.putExtra(Intent.EXTRA_TEXT, currentWord.getName() + " - " + Html.fromHtml(currentWord.getMeaning()).toString());
-				}
-				else if(currentWord.getTitle() != null) {
+				} else if (currentWord.getTitle() != null) {
 					shareIntent.putExtra(Intent.EXTRA_TEXT, currentWord.getName() + " - " + Html.fromHtml(currentWord.getTitle()).toString());
 				}
 				shareIntent.setType("text/plain");
