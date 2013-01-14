@@ -309,16 +309,6 @@ public class MainActivity extends SherlockActivity {
 		dialog.show();
 	}
 
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-	    super.onCreateContextMenu(menu, v, menuInfo);
-
-	   // info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-	    android.view.MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.context_menu, menu);
-	}
-
 	public void cleanWord() {
 		layoutTitle.setVisibility(View.GONE);
 		layoutText.setVisibility(View.GONE);
@@ -348,9 +338,6 @@ public class MainActivity extends SherlockActivity {
 			TextView resultMis = (TextView) findViewById(R.id.resultMis);
 			TextView resultSyn = (TextView) findViewById(R.id.resultSyn);
 			TextView resultError = (TextView) findViewById(R.id.resultError);
-
-//			resultText.setKeyListener(null);
-//			resultText.setFocusable(true);
 
 			registerForContextMenu(resultText);
 
