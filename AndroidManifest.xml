@@ -1,11 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.chitankadict.app"
     android:versionCode="3"
-    android:versionName="1.2" 
+    android:versionName="1.2"
     android:installLocation="auto">
 
     <uses-sdk
-        android:maxSdkVersion="17"
         android:minSdkVersion="7"
         android:targetSdkVersion="17" />
 

@@ -1,0 +1,19 @@
+You can test the application by connecting to internet and typing a word in the search box.
+The word can be typed in Latin, for example "mir".
+The dictionary will convert the latin script into Cyrillic script and will display the meaning of the word (in the example above it is "peace" in Bulgarian language   )
+
+
+-=====================================================
+
+
+Online Dictionary of the Bulgarian language for Android from "My Library" Chitanka.
+
+Source of the dictionary - rechnik.chitanka.info.
+
+Functions of the Bulgarian dictionary:
+
+- Meaning of the word
+- Synonyms
+- Misspelling
+- Random word
+- Sharing the meaning of a word

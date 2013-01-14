@@ -26,10 +26,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -46,6 +50,12 @@ public class MainActivity extends SherlockActivity {
 	private ShareActionProvider actionProvider = null;
 
 	boolean mIsLargeLayout;
+
+	private LinearLayout layoutTitle;
+	private LinearLayout layoutText;
+	private LinearLayout layoutMiss;
+	private LinearLayout layoutSyn;
+	private LinearLayout layoutError;
 
 	private class TranslateTask extends AsyncTask<Object, Object, Object> {
 
@@ -103,6 +113,12 @@ public class MainActivity extends SherlockActivity {
 		final EditText searchText = (EditText) findViewById(R.id.searchText);
 		final ProgressBar progress = (ProgressBar) findViewById(R.id.progressBar);
 
+		layoutTitle = (LinearLayout) findViewById(R.id.LinearLayoutTitle);
+		layoutText = (LinearLayout) findViewById(R.id.LinearLayoutText);
+		layoutMiss = (LinearLayout) findViewById(R.id.LinearLayoutMisspells);
+		layoutSyn = (LinearLayout) findViewById(R.id.LinearLayoutSyn);
+		layoutError = (LinearLayout) findViewById(R.id.LinearLayoutError);
+
 		progress.setVisibility(View.GONE);
 
 		// Search word from Synonym Link
@@ -126,7 +142,7 @@ public class MainActivity extends SherlockActivity {
 
 				String searchUrl = buildSearchUrl(searchText);
 
-				hideKeyboard();
+				hideKeyboard();//TUK
 
 				new TranslateTask(searchUrl, progress).execute();
 			}
@@ -164,16 +180,16 @@ public class MainActivity extends SherlockActivity {
 
 		}
 	}
-	
+
 //	  @Override
 //    public boolean onTouchEvent(MotionEvent event) {
 //		hideKeyboard();
 //        return true;
 //    }
-	
+
 	private void hideKeyboard() {
 		InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+		inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);//TUK
 	}
 
 	private String buildSearchUrl(final EditText searchText) {
@@ -229,7 +245,7 @@ public class MainActivity extends SherlockActivity {
 
 	/**
 	 * Creates a sharing {@link Intent} and assign it to the Action Provider.
-	 * 
+	 *
 	 * @return void
 	 */
 	private void assignShareIntent() {
@@ -241,7 +257,7 @@ public class MainActivity extends SherlockActivity {
 
 			if (currentWord != null && currentWord.getTitle() != null) {
 				final String caption = getResources().getString(R.string.word)  + ":" + currentWord.getName();
-				
+
 				shareIntent.putExtra(Intent.EXTRA_SUBJECT, caption);
 
 				if (currentWord.getMeaning() != null) {
@@ -251,7 +267,7 @@ public class MainActivity extends SherlockActivity {
 					shareIntent.putExtra(Intent.EXTRA_TEXT, currentWord.getName() + " - " + Html.fromHtml(currentWord.getTitle()).toString());
 				}
 				shareIntent.setType("text/plain");
-				
+
 				// set share
 				actionProvider.setShareIntent(shareIntent);
 			}
@@ -301,13 +317,43 @@ public class MainActivity extends SherlockActivity {
 		dialog.show();
 	}
 
-	public void cleanWord() {
-		LinearLayout layoutTitle = (LinearLayout) findViewById(R.id.LinearLayoutTitle);
-		LinearLayout layoutText = (LinearLayout) findViewById(R.id.LinearLayoutText);
-		LinearLayout layoutMiss = (LinearLayout) findViewById(R.id.LinearLayoutMisspells);
-		LinearLayout layoutSyn = (LinearLayout) findViewById(R.id.LinearLayoutSyn);
-		LinearLayout layoutError = (LinearLayout) findViewById(R.id.LinearLayoutError);
 
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	    super.onCreateContextMenu(menu, v, menuInfo);
+
+	   // info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+	    android.view.MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.context_menu, menu);
+	}
+
+	public boolean onContextItemSelected(android.view.MenuItem item) {
+		//@Override
+
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+
+		Log.d("WALLY", "WALLY " + String.valueOf(info.toString()));
+
+	    switch (item.getItemId()) {
+
+	    case R.id.context_copy:
+
+//	        String phone="555-555-555";
+//	        String toDial="tel:"+phone.toString();
+//
+//	        Uri uri = Uri.parse(toDial);
+//	        Intent it = new Intent(Intent.ACTION_DIAL, uri);
+//	        startActivity(it);
+
+	    return true;
+
+	    default:
+	    return super.onContextItemSelected(item);
+	    }
+	}
+
+
+	public void cleanWord() {
 		layoutTitle.setVisibility(View.GONE);
 		layoutText.setVisibility(View.GONE);
 		layoutMiss.setVisibility(View.GONE);
@@ -317,7 +363,7 @@ public class MainActivity extends SherlockActivity {
 
 	/**
 	 * Applies a Word to the UI
-	 * 
+	 *
 	 * @param word
 	 */
 	public void loadWord(Word word) {
@@ -337,11 +383,10 @@ public class MainActivity extends SherlockActivity {
 			TextView resultSyn = (TextView) findViewById(R.id.resultSyn);
 			TextView resultError = (TextView) findViewById(R.id.resultError);
 
-			LinearLayout layoutTitle = (LinearLayout) findViewById(R.id.LinearLayoutTitle);
-			LinearLayout layoutText = (LinearLayout) findViewById(R.id.LinearLayoutText);
-			LinearLayout layoutMiss = (LinearLayout) findViewById(R.id.LinearLayoutMisspells);
-			LinearLayout layoutSyn = (LinearLayout) findViewById(R.id.LinearLayoutSyn);
-			LinearLayout layoutError = (LinearLayout) findViewById(R.id.LinearLayoutError);
+//			resultText.setKeyListener(null);
+//			resultText.setFocusable(true);
+
+			registerForContextMenu(resultText);
 
 			resultSyn.setMovementMethod(LinkMovementMethod.getInstance());
 
