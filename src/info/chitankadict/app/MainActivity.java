@@ -26,14 +26,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -181,12 +179,6 @@ public class MainActivity extends SherlockActivity {
 		}
 	}
 
-//	  @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//		hideKeyboard();
-//        return true;
-//    }
-
 	private void hideKeyboard() {
 		InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);//TUK
@@ -326,32 +318,6 @@ public class MainActivity extends SherlockActivity {
 	    android.view.MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.context_menu, menu);
 	}
-
-	public boolean onContextItemSelected(android.view.MenuItem item) {
-		//@Override
-
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-
-		Log.d("WALLY", "WALLY " + String.valueOf(info.toString()));
-
-	    switch (item.getItemId()) {
-
-	    case R.id.context_copy:
-
-//	        String phone="555-555-555";
-//	        String toDial="tel:"+phone.toString();
-//
-//	        Uri uri = Uri.parse(toDial);
-//	        Intent it = new Intent(Intent.ACTION_DIAL, uri);
-//	        startActivity(it);
-
-	    return true;
-
-	    default:
-	    return super.onContextItemSelected(item);
-	    }
-	}
-
 
 	public void cleanWord() {
 		layoutTitle.setVisibility(View.GONE);
