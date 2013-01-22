@@ -136,7 +136,7 @@ public class MainActivity extends SherlockActivity {
 
 				String searchUrl = buildSearchUrl(searchText);
 
-				hideKeyboard();//TUK
+				hideKeyboard();
 
 				new TranslateTask(searchUrl, progress).execute();
 			}
@@ -177,7 +177,10 @@ public class MainActivity extends SherlockActivity {
 
 	private void hideKeyboard() {
 		InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);//TUK
+		try {
+			inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+		} catch (Exception e) {
+		}
 	}
 
 	private String buildSearchUrl(final EditText searchText) {
@@ -372,7 +375,7 @@ public class MainActivity extends SherlockActivity {
 				for (Iterator<String> iterator = synonyms.iterator(); iterator.hasNext();) {
 					String string = (String) iterator.next();
 
-					string = "<a href='info.chitankadict.app://?word=" + string + "'>" + string + "</a>";
+					string = "<a href='info.chitankadict.app://?word=" + string + "' >" + string + "</a>";
 
 					resultSyn.append(Html.fromHtml(string));
 

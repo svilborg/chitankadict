@@ -27,7 +27,7 @@ public class JsoupWordParser {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 * @throws IOException
 	 */
@@ -51,11 +51,10 @@ public class JsoupWordParser {
 
 		currentWord.setMeaning(meaningBox.html().toString());
 
-		// Extract Synonyms 
+		// Extract Synonyms
 		Elements synonymsBox = doc.select("div.synonyms ul li a");
 
-		for (Iterator<Element> iterator = synonymsBox.iterator(); iterator
-				.hasNext();) {
+		for (Iterator<Element> iterator = synonymsBox.iterator(); iterator.hasNext();) {
 			Element element = (Element) iterator.next();
 
 			currentWord.addSynonym(element.text().toString());
