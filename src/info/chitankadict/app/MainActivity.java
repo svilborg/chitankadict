@@ -393,7 +393,7 @@ public class MainActivity extends SherlockActivity {
 						resultError.setText(R.string.WordNotFound);
 					} else if (word.getError() == Word.WORD_MISSPELLED) {
 
-						String errorCorrect = word.getName() + " е грешно изписване на " + word.getCorrect();
+						String errorCorrect = word.getName() + this.getString(R.string.WordMisspelled) + word.getCorrect();
 
 						resultError.setText(errorCorrect);
 					} else {
