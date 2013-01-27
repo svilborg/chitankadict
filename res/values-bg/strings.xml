@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Речник</string>
+    <string name="title_activity_main">Речник</string>
+    <string name="search">Търсене</string>
+    <string name="HTTPError">Грешка при извличане на резултата.</string>
+    <string name="WordNotFound">Търсената дума липсва в речника.</string>
+    <string name="WordMisspelled">е грешно изписване на </string>
+
+    <string name="word">Дума</string>
+    <string name="meaning">Значение</string>
+    <string name="synonims">Синоними</string>
+    <string name="misspells">Грешни изписвания</string>
+    <string name="misspell">Грешно изписване</string>
+    <string name="error">Грешка</string>
+    <string name="search_label">Речник</string>
+
+    <string name="menu_random">Случайна Дума</string>
+    <string name="menu_random_min">Случайна</string>
+    <string name="menu_share">Сподели</string>
+    <string name="menu_about">Относно</string>
+    <string name="dialog_cancel">Затвори</string>
+    <string name="dialog_about"><![CDATA[ Речник на българския език за Андроид на "Моята библиотека" Читанка  -
+        <a href="http://rechnik.chitanka.info/">http://rechnik.chitanka.info/</a> ]]>
+    </string>
+</resources>

@@ -136,7 +136,7 @@ public class MainActivity extends SherlockActivity {
 
 				String searchUrl = buildSearchUrl(searchText);
 
-				hideKeyboard();//TUK
+				hideKeyboard();
 
 				new TranslateTask(searchUrl, progress).execute();
 			}
@@ -178,10 +178,8 @@ public class MainActivity extends SherlockActivity {
 	private void hideKeyboard() {
 		InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		try {
-			inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);//TUK
+			inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
@@ -395,7 +393,7 @@ public class MainActivity extends SherlockActivity {
 						resultError.setText(R.string.WordNotFound);
 					} else if (word.getError() == Word.WORD_MISSPELLED) {
 
-						String errorCorrect = word.getName() + " е грешно изписване на " + word.getCorrect();
+						String errorCorrect = word.getName() + this.getString(R.string.WordMisspelled) + word.getCorrect();
 
 						resultError.setText(errorCorrect);
 					} else {

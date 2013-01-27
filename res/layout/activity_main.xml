@@ -113,7 +113,8 @@
                     android:singleLine="false"
                     android:textColor="#eee"
                     android:textSize="18sp"
-                    android:autoLink="web"/>
+                    android:autoLink="web"
+                    android:textColorLink="@android:color/white"/>
 
             </LinearLayout>
 
