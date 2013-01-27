@@ -177,7 +177,12 @@ public class MainActivity extends SherlockActivity {
 
 	private void hideKeyboard() {
 		InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);//TUK
+		try {
+			inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);//TUK
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private String buildSearchUrl(final EditText searchText) {
