@@ -14,8 +14,6 @@ import org.jsoup.select.Elements;
 
 public class JsoupWordParser {
 
-	static final String RSS = "rss";
-
 	private final URL feedUrl;
 
 	public JsoupWordParser(String feedUrl) {
@@ -69,6 +67,7 @@ public class JsoupWordParser {
 
 			word.setCorrect(correctText.html());
 		}
+
 
 		return word;
 	}

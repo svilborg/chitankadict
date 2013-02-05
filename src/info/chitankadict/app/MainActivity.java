@@ -26,6 +26,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,6 +53,10 @@ public class MainActivity extends SherlockActivity {
 	private LinearLayout layoutMiss;
 	private LinearLayout layoutSyn;
 	private LinearLayout layoutError;
+
+	private Button searchButton;
+	private ProgressBar progress;
+	private EditText searchText;
 
 	private class TranslateTask extends AsyncTask<Object, Object, Object> {
 
@@ -101,11 +106,15 @@ public class MainActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Uri data = getIntent().getData();
+		Intent intent = getIntent();
 
-		final Button searchButton = (Button) findViewById(R.id.searchButton);
-		final EditText searchText = (EditText) findViewById(R.id.searchText);
-		final ProgressBar progress = (ProgressBar) findViewById(R.id.progressBar);
+		String action = intent.getAction();
+		String type = intent.getType();
+		Uri data = intent.getData();
+
+		searchButton = (Button) findViewById(R.id.searchButton);
+		searchText = (EditText) findViewById(R.id.searchText);
+		progress = (ProgressBar) findViewById(R.id.progressBar);
 
 		layoutTitle = (LinearLayout) findViewById(R.id.LinearLayoutTitle);
 		layoutText = (LinearLayout) findViewById(R.id.LinearLayoutText);
@@ -115,18 +124,23 @@ public class MainActivity extends SherlockActivity {
 
 		progress.setVisibility(View.GONE);
 
-		// Search word from Synonym Link
-		if ((data != null)) {
+		String initWord = null;
 
-			String synWord = data.getQueryParameter("word");
+		// Search word from Share Menu
+		if (Intent.ACTION_SEND.equals(action) && type != null) {
+			if ("text/plain".equals(type)) {
+				Log.d(this.getPackageName(), type);
 
-			searchText.setText(synWord);
-
-			String searchUrl = buildSearchUrl(searchText);
-
-			if (synWord != null) {
-				new TranslateTask(searchUrl, progress).execute();
+				initWord = intent.getStringExtra(Intent.EXTRA_TEXT);
 			}
+		}
+		// Search word from Synonym Link
+		else if (data != null) {
+			initWord = data.getQueryParameter("word");
+		}
+
+		if (initWord != null) {
+			initSearchWord(initWord);
 		}
 
 		searchButton.setOnClickListener(new View.OnClickListener() {
@@ -170,9 +184,15 @@ public class MainActivity extends SherlockActivity {
 		if (savedInstanceState == null) {
 			// On Start Clear the Word
 			cleanWord();
-		} else {
-
 		}
+	}
+
+	private void initSearchWord(String synWord) {
+		searchText.setText(synWord);
+
+		String searchUrl = buildSearchUrl(searchText);
+
+		new TranslateTask(searchUrl, progress).execute();
 	}
 
 	private void hideKeyboard() {
