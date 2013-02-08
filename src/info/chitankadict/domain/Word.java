@@ -19,7 +19,7 @@ public class Word implements Comparable<Word>, Serializable {
 
 	private String misspells;
 	private String correct;
-	private int error = 0; 
+	private int error = 0;
 
 	public Word() {
 		this.synonyms = new ArrayList<String>();
@@ -79,7 +79,7 @@ public class Word implements Comparable<Word>, Serializable {
 	}
 
 	public void setMeaning(String meaning) {
-		if (!("").equals(meaning)) {
+		if (meaning != null && !("").equals(meaning) ) {
 			this.meaning = meaning.trim();
 		}
 	}

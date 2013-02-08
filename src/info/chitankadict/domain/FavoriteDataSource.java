@@ -80,6 +80,24 @@ public class FavoriteDataSource {
 		return words;
 	}
 
+	public List<String> getAllFavoriteNames() {
+		List<String> names = new ArrayList<String>();
+
+		Cursor cursor = database.query(DbHelper.TABLE, new String[] { DbHelper.COLUMN_NAME }, null, null, null, null, null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			//Word word = cursorToWord(cursor);
+			if (cursor != null && cursor.getString(0) != null) {
+				names.add(cursor.getString(0));
+			}
+			cursor.moveToNext();
+		}
+		// Make sure to close the cursor
+		cursor.close();
+		return names;
+	}
+
 	private Word cursorToWord(Cursor cursor) {
 		Word word = new Word();
 

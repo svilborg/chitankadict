@@ -109,8 +109,8 @@ public class MainActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		//datasource = new FavoriteDataSource(this);
-		//datasource.open();
+		datasource = new FavoriteDataSource(this);
+		datasource.open();
 
 		Intent intent = getIntent();
 
@@ -307,6 +307,11 @@ public class MainActivity extends SherlockActivity {
 
 			showDialog();
 			return true;
+		case R.id.menu_item_favorites:
+
+			Intent favIntent = new Intent(MainActivity.this, FavoritesActivity.class);
+			MainActivity.this.startActivity(favIntent);
+			return true;
 		}
 		return false;
 	}
@@ -353,18 +358,14 @@ public class MainActivity extends SherlockActivity {
 		currentWord = word;
 
 		if (currentWord != null) {
-
 			// Save in DB
 
-			//datasource.create(currentWord);
-
-			//List<Word> allFavs = datasource.getAllFavorites();
-
-			//Log.d(this.getPackageName(), "ALL FAVORITES !!!");
-
-			//for (Word word2 : allFavs) {
-			//	Log.d(this.getPackageName(), "F ::" + word2.getName());
-			//}
+			datasource.create(currentWord);
+			List<Word> allFavs = datasource.getAllFavorites();
+			Log.d(this.getPackageName(), "ALL FAVORITES !!!");
+			for (Word word2 : allFavs) {
+				Log.d(this.getPackageName(), "F ::" + word2.getName());
+			}
 
 			if (actionProvider != null) {
 				assignShareIntent();
@@ -446,13 +447,13 @@ public class MainActivity extends SherlockActivity {
 
 	@Override
 	protected void onResume() {
-		//datasource.open();
+		datasource.open();
 		super.onResume();
 	}
 
 	@Override
 	protected void onPause() {
-		//datasource.close();
+		datasource.close();
 		super.onPause();
 	}
 }
