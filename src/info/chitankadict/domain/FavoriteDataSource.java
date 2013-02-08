@@ -32,23 +32,29 @@ public class FavoriteDataSource {
 	}
 
 	public Word create(Word word) {
-		ContentValues values = new ContentValues();
+		Word newWord = new Word();
 
-		values.put(DbHelper.COLUMN_NAME, word.getName());
-		values.put(DbHelper.COLUMN_TITLE, word.getTitle());
-		values.put(DbHelper.COLUMN_MEANING, word.getMeaning());
-		// values.put(DbHelper.COLUMN_SYNONYMS, word.getSynonyms());
-		values.put(DbHelper.COLUMN_MISSPELS, word.getMisspells());
+		if (word != null && word.getName() != null) {
 
-		long insertId = database.insert(DbHelper.TABLE, null, values);
+			ContentValues values = new ContentValues();
 
-		Log.d(MainActivity.class.getSimpleName(), "LAST INSERT ID ::" + insertId);
+			values.put(DbHelper.COLUMN_NAME, word.getName());
+			values.put(DbHelper.COLUMN_TITLE, word.getTitle());
+			values.put(DbHelper.COLUMN_MEANING, word.getMeaning());
+			// values.put(DbHelper.COLUMN_SYNONYMS, word.getSynonyms());
+			values.put(DbHelper.COLUMN_MISSPELS, word.getMisspells());
 
-		Cursor cursor = database.query(DbHelper.TABLE, allColumns, DbHelper.COLUMN_NAME + " = " + word.getName(), null, null, null, null);
-		cursor.moveToFirst();
+			long insertId = database.insert(DbHelper.TABLE, null, values);
 
-		Word newWord = cursorToWord(cursor);
-		cursor.close();
+			Log.d(MainActivity.class.getSimpleName(), "LAST INSERT ID ::" + insertId);
+
+			Cursor cursor = database.query(DbHelper.TABLE, allColumns, DbHelper.COLUMN_NAME + " = ? ", new String[] { word.getName() }, null, null, null);
+			cursor.moveToFirst();
+
+			newWord = cursorToWord(cursor);
+			cursor.close();
+		}
+
 		return newWord;
 	}
 
@@ -76,8 +82,17 @@ public class FavoriteDataSource {
 
 	private Word cursorToWord(Cursor cursor) {
 		Word word = new Word();
-		// word.set(cursor.getLong(0));
-		// word.setWord(cursor.getString(1));
+
+		//Log.d(MainActivity.class.getName(), cursor.toString());
+
+		if (cursor != null && cursor.getString(0) != null) {
+			word.setName(cursor.getString(0));
+			word.setTitle(cursor.getString(1));
+			word.setMeaning(cursor.getString(2));
+			//word.set(cursor.getString(2));
+			word.setMisspells(cursor.getString(4));
+		}
+
 		return word;
 	}
 }
