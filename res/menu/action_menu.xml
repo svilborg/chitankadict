@@ -4,18 +4,23 @@
     <item
         android:id="@+id/menu_item_random"
         android:icon="@android:drawable/ic_popup_sync"
-        android:showAsAction="always" 
+        android:showAsAction="always"
         android:title="@string/menu_random"
         android:titleCondensed="@string/menu_random_min"/>
     <item
         android:id="@+id/menu_item_share"
         android:actionProviderClass="com.actionbarsherlock.widget.ShareActionProvider"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/menu_share"/>
     <item
+        android:id="@+id/menu_item_favorites"
+        android:icon="@drawable/ic_action_star"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_favorites"
+        />
+    <item
         android:id="@+id/menu_item_about"
-        android:showAsAction="always"
         android:icon="@android:drawable/ic_dialog_info"
+        android:showAsAction="ifRoom"
         android:title="@string/menu_about"/>
-
 </menu>
