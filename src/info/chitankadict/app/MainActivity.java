@@ -1,5 +1,6 @@
 package info.chitankadict.app;
 
+import info.chitankadict.domain.FavoriteDataSource;
 import info.chitankadict.domain.Word;
 import info.chitankadict.parser.JsoupWordParser;
 
@@ -8,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.http.protocol.HTTP;
 import org.jsoup.HttpStatusException;
@@ -57,6 +59,7 @@ public class MainActivity extends SherlockActivity {
 	private Button searchButton;
 	private ProgressBar progress;
 	private EditText searchText;
+	private FavoriteDataSource datasource;
 
 	private class TranslateTask extends AsyncTask<Object, Object, Object> {
 
@@ -105,6 +108,9 @@ public class MainActivity extends SherlockActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		//datasource = new FavoriteDataSource(this);
+		//datasource.open();
 
 		Intent intent = getIntent();
 
@@ -348,6 +354,18 @@ public class MainActivity extends SherlockActivity {
 
 		if (currentWord != null) {
 
+			// Save in DB
+
+			//datasource.create(currentWord);
+
+			//List<Word> allFavs = datasource.getAllFavorites();
+
+			//Log.d(this.getPackageName(), "ALL FAVORITES !!!");
+
+			//for (Word word2 : allFavs) {
+			//	Log.d(this.getPackageName(), "F ::" + word2.getName());
+			//}
+
 			if (actionProvider != null) {
 				assignShareIntent();
 			}
@@ -424,5 +442,17 @@ public class MainActivity extends SherlockActivity {
 				layoutError.setVisibility(View.VISIBLE);
 			}
 		}
+	}
+
+	@Override
+	protected void onResume() {
+		//datasource.open();
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		//datasource.close();
+		super.onPause();
 	}
 }
