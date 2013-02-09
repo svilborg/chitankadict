@@ -18,6 +18,7 @@
     <string name="menu_random_min">Случайна</string>
     <string name="menu_share">Сподели</string>
     <string name="menu_add_favorite">Добави в любими</string>
+    <string name="menu_remove_favorite">Премахни от любими</string>
     <string name="menu_favorites">Любими</string>
     <string name="menu_about">Относно</string>
     <string name="dialog_cancel">Затвори</string>

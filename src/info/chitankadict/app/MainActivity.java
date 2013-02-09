@@ -261,7 +261,7 @@ public class MainActivity extends SherlockActivity {
 
 	/**
 	 * Creates a sharing {@link Intent} and assign it to the Action Provider.
-	 * 
+	 *
 	 * @return void
 	 */
 	private void assignShareIntent() {
@@ -310,6 +310,10 @@ public class MainActivity extends SherlockActivity {
 
 			addFavorite();
 			return true;
+		case R.id.menu_item_remove_favorite:
+
+			removeFavorite();
+			return true;
 		case R.id.menu_item_favorites:
 
 			Intent favIntent = new Intent(MainActivity.this, FavoritesActivity.class);
@@ -350,6 +354,16 @@ public class MainActivity extends SherlockActivity {
 		}
 	}
 
+	private void removeFavorite() {
+		if (currentWord != null) {
+			try {
+				datasource.delete(currentWord.getName());
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+	}
+
 	void showDialog() {
 
 		final Dialog dialog = new Dialog(this);
@@ -383,7 +397,7 @@ public class MainActivity extends SherlockActivity {
 
 	/**
 	 * Applies a Word to the UI
-	 * 
+	 *
 	 * @param word
 	 */
 	public void loadWord(Word word) {

@@ -88,10 +88,14 @@ public class FavoriteDataSource {
 		return -1L;
 	}
 
-	public void delete(Word word) {
+	public void delete(String name) {
+		database.delete(DbHelper.TABLE, DbHelper.COLUMN_NAME + " = ? ", new String[] { name });
+	}
+
+	public void deleteByWord(Word word) {
 		String name = word.getName();
 
-		database.delete(DbHelper.TABLE, DbHelper.COLUMN_NAME + " = " + name, null);
+		delete(name);
 	}
 
 	public Word getWord(String name) {
@@ -155,15 +159,18 @@ public class FavoriteDataSource {
 
 			String synJson = cursor.getString(3);
 
-			try {
-				JSONArray jsonArray = new JSONArray(synJson);
+			if (synJson != null) {
+				try {
+					JSONArray jsonArray = new JSONArray(synJson);
 
-				for (int i = 0; i < jsonArray.length(); i++) {
-					word.addSynonym(jsonArray.getString(i));
+					if (jsonArray != null) {
+						for (int i = 0; i < jsonArray.length(); i++) {
+							word.addSynonym(jsonArray.getString(i));
+						}
+					}
+				} catch (JSONException e) {
+					Log.d(MainActivity.class.getName(), e.getMessage());
 				}
-
-			} catch (JSONException e) {
-				Log.d(MainActivity.class.getName(), e.getMessage());
 			}
 
 			word.setMisspells(cursor.getString(4));

@@ -6,6 +6,7 @@ package info.chitankadict.app;
 import java.util.List;
 
 import com.actionbarsherlock.app.SherlockListActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 import info.chitankadict.domain.FavoriteDataSource;
 import android.content.Intent;
@@ -32,6 +33,9 @@ public class FavoritesActivity extends SherlockListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list);
+
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 		datasource = new FavoriteDataSource(this);
 		datasource.open();
@@ -60,6 +64,18 @@ public class FavoritesActivity extends SherlockListActivity {
 				finish();
 			}
 		});
+	}
+
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+
+		int itemId = item.getItemId();
+		switch (itemId) {
+		case android.R.id.home:
+			finish();
+
+			break;
+		}
+		return true;
 	}
 
 	/**
