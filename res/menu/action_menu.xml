@@ -31,6 +31,11 @@
         android:title="@string/menu_favorites"
         />
     <item
+        android:id="@+id/menu_item_rate"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_rate"
+        />
+    <item
         android:id="@+id/menu_item_about"
         android:icon="@android:drawable/ic_dialog_info"
         android:showAsAction="ifRoom"

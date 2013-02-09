@@ -20,6 +20,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.ShareActionProvider;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
@@ -302,10 +303,7 @@ public class MainActivity extends SherlockActivity {
 			new TranslateTask(HTTP_RECHNIK_RANDOM_URL, progress).execute();
 
 			return true;
-		case R.id.menu_item_about:
 
-			showDialog();
-			return true;
 		case R.id.menu_item_add_favorite:
 
 			addFavorite();
@@ -320,6 +318,19 @@ public class MainActivity extends SherlockActivity {
 
 			startActivityForResult(favIntent, 1);
 			return true;
+		case R.id.menu_item_rate:
+
+			Uri uri = Uri.parse("market://details?id=" + getPackageName());
+			Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+			try {
+				startActivity(goToMarket);
+			} catch (ActivityNotFoundException e) {
+				Toast.makeText(getApplicationContext(), "Couldn't launch the market", Toast.LENGTH_SHORT).show();
+			}
+			return true;
+		case R.id.menu_item_about:
+
+			showDialog();
 		}
 		return false;
 	}
@@ -343,13 +354,17 @@ public class MainActivity extends SherlockActivity {
 	private void addFavorite() {
 		if (currentWord != null) {
 
-			try {
-				datasource.create(currentWord);
+			if (currentWord.getError() > 0) {
+				Toast.makeText(getApplicationContext(), getString(R.string.WordNotFound), Toast.LENGTH_SHORT).show();
+			} else {
+				try {
+					datasource.create(currentWord);
 
-				Toast.makeText(getApplicationContext(), getString(R.string.success_favotires), Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), getString(R.string.success_favotires), Toast.LENGTH_SHORT).show();
 
-			} catch (SQLiteConstraintException e) {
-				Toast.makeText(getApplicationContext(), getString(R.string.error_favotires), Toast.LENGTH_SHORT).show();
+				} catch (SQLiteConstraintException e) {
+					Toast.makeText(getApplicationContext(), getString(R.string.error_favotires), Toast.LENGTH_SHORT).show();
+				}
 			}
 		}
 	}
@@ -472,7 +487,7 @@ public class MainActivity extends SherlockActivity {
 						resultError.setText(R.string.WordNotFound);
 					} else if (word.getError() == Word.WORD_MISSPELLED) {
 
-						String errorCorrect = word.getName() + this.getString(R.string.WordMisspelled) + word.getCorrect();
+						String errorCorrect = word.getName() + " " + this.getString(R.string.WordMisspelled) + " " + word.getCorrect();
 
 						resultError.setText(errorCorrect);
 					} else {

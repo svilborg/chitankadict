@@ -4,7 +4,7 @@
     <string name="search">Търсене</string>
     <string name="HTTPError">Грешка при извличане на резултата.</string>
     <string name="WordNotFound">Търсената дума липсва в речника.</string>
-    <string name="WordMisspelled">е грешно изписване на </string>
+    <string name="WordMisspelled"> е грешно изписване на </string>
 
     <string name="word">Дума</string>
     <string name="meaning">Значение</string>
@@ -20,6 +20,7 @@
     <string name="menu_add_favorite">Добави в любими</string>
     <string name="menu_remove_favorite">Премахни от любими</string>
     <string name="menu_favorites">Любими</string>
+    <string name="menu_rate">Оценка</string>
     <string name="menu_about">Относно</string>
     <string name="dialog_cancel">Затвори</string>
 
