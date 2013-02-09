@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 /**
  * Favorites Activity
@@ -59,8 +58,6 @@ public class FavoritesActivity extends SherlockListActivity {
 				setResult(RESULT_OK, i);
 
 				finish();
-
-				//Toast.makeText(getApplicationContext(), "Click item : " + text + " : " + position, Toast.LENGTH_LONG).show();
 			}
 		});
 	}

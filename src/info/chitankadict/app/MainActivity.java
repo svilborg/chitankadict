@@ -28,7 +28,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -108,8 +107,6 @@ public class MainActivity extends SherlockActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
-		Log.d(this.getPackageName(), "ON CREATE");
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
@@ -139,8 +136,6 @@ public class MainActivity extends SherlockActivity {
 		// Search word from Share Menu
 		if (Intent.ACTION_SEND.equals(action) && type != null) {
 			if ("text/plain".equals(type)) {
-				Log.d(this.getPackageName(), type);
-
 				initWord = intent.getStringExtra(Intent.EXTRA_TEXT);
 			}
 		}
@@ -240,8 +235,6 @@ public class MainActivity extends SherlockActivity {
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		Word currWord = (Word) savedInstanceState.getSerializable("currentWord");
 
-		Log.d(this.getPackageName(), "ON RESTORE INSTANCE");
-
 		if (currWord == null) {
 			cleanWord();
 		} else {
@@ -268,7 +261,7 @@ public class MainActivity extends SherlockActivity {
 
 	/**
 	 * Creates a sharing {@link Intent} and assign it to the Action Provider.
-	 *
+	 * 
 	 * @return void
 	 */
 	private void assignShareIntent() {
@@ -332,20 +325,14 @@ public class MainActivity extends SherlockActivity {
 			super.onActivityResult(requestCode, resultCode, data);
 
 			if (data.getExtras().containsKey("favWord")) {
-				Log.d(getPackageName(), "FAV :::::" + data.getStringExtra("favWord"));
-
 				datasource.open();
 
 				Word word = datasource.getWord(data.getStringExtra("favWord"));
-
-				Log.d(getPackageName(), "WORD :::" + word);
 
 				cleanWord();
 
 				loadWord(word);
 			}
-
-			Log.d(this.getPackageName(), "Result :: " + String.valueOf(requestCode) + " / " + String.valueOf(resultCode) + "/" + data.getExtras().toString());
 		}
 	}
 
@@ -396,7 +383,7 @@ public class MainActivity extends SherlockActivity {
 
 	/**
 	 * Applies a Word to the UI
-	 *
+	 * 
 	 * @param word
 	 */
 	public void loadWord(Word word) {

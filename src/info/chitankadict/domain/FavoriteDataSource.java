@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -33,7 +34,7 @@ public class FavoriteDataSource {
 		dbHelper.close();
 	}
 
-	public Word createAndGet (Word word) {
+	public Word createAndGet(Word word) {
 		Word newWord = new Word();
 
 		if (word != null && word.getName() != null) {
@@ -80,8 +81,6 @@ public class FavoriteDataSource {
 			values.put(DbHelper.COLUMN_SYNONYMS, jsonSyns.toString());
 
 			long insertId = database.insertOrThrow(DbHelper.TABLE, null, values);
-
-			//Log.d(MainActivity.class.getSimpleName(), "LAST INSERT ID ::" + insertId);
 
 			return insertId;
 		}
@@ -149,13 +148,24 @@ public class FavoriteDataSource {
 	private Word cursorToWord(Cursor cursor) {
 		Word word = new Word();
 
-		// Log.d(MainActivity.class.getName(), cursor.toString());
-
 		if (cursor != null && cursor.getString(0) != null) {
 			word.setName(cursor.getString(0));
 			word.setTitle(cursor.getString(1));
 			word.setMeaning(cursor.getString(2));
-			// word.set(cursor.getString(2));
+
+			String synJson = cursor.getString(3);
+
+			try {
+				JSONArray jsonArray = new JSONArray(synJson);
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+					word.addSynonym(jsonArray.getString(i));
+				}
+
+			} catch (JSONException e) {
+				Log.d(MainActivity.class.getName(), e.getMessage());
+			}
+
 			word.setMisspells(cursor.getString(4));
 		}
 

@@ -21,7 +21,7 @@ public class DbHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_SYNONYMS = "synonyms";
 	public static final String COLUMN_MISSPELS = "misspells";
 
-	public static final boolean Debug = true;
+	public static final boolean debug = false;
 
 	public DbHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,7 +29,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
 	public Cursor query(SQLiteDatabase db, String query) {
 		Cursor cursor = db.rawQuery(query, null);
-		if (Debug) {
+		if (debug) {
 			Log.d(TAG, "Executing Query: " + query);
 		}
 		return cursor;
@@ -42,14 +42,14 @@ public class DbHelper extends SQLiteOpenHelper {
 
 		db.execSQL(sql);
 
-		if (Debug) {
+		if (debug) {
 			Log.d(TAG, "onCreate Called.");
 		}
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		if (Debug) {
+		if (debug) {
 			Log.d(TAG, "Upgrade: Dropping Table and Calling onCreate");
 			Log.w(DbHelper.class.getName(), "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
 		}
