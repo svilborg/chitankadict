@@ -5,6 +5,8 @@ package info.chitankadict.app;
 
 import java.util.List;
 
+import com.actionbarsherlock.app.SherlockListActivity;
+
 import info.chitankadict.domain.FavoriteDataSource;
 import android.app.ListActivity;
 import android.os.Bundle;
@@ -18,7 +20,7 @@ import android.widget.Toast;
 /**
  * Favorites Activity
  */
-public class FavoritesActivity extends ListActivity {
+public class FavoritesActivity extends SherlockListActivity {
 
 	private FavoriteDataSource datasource;
 
@@ -50,6 +52,8 @@ public class FavoritesActivity extends ListActivity {
 	    	  @Override
 	    	  public void onItemClick(AdapterView<?> parent, View view,
 	    	    int position, long id) {
+	    		  
+	    		  
 	    	    Toast.makeText(getApplicationContext(),
 	    	      "Click ListItem Number " + position, Toast.LENGTH_LONG)
 	    	      .show();

@@ -22,7 +22,6 @@
                 <data android:mimeType="text/plain"/>
             </intent-filter>
         </activity>
-        <!--created by svilborg at 2013-02-09 00:02:54-->
         <activity android:name=".FavoritesActivity"/>
     </application>
 </manifest>
