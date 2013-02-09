@@ -8,13 +8,16 @@ import java.util.List;
 import com.actionbarsherlock.app.SherlockListActivity;
 
 import info.chitankadict.domain.FavoriteDataSource;
-import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -41,24 +44,28 @@ public class FavoritesActivity extends SherlockListActivity {
 
 		List<String> values = datasource.getAllFavoriteNames();
 
-	    // Use the SimpleCursorAdapter to show the
-	    // elements in a ListView
-	    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-	        android.R.layout.simple_list_item_1, values);
-	    setListAdapter(adapter);
+		// Use the SimpleCursorAdapter to show the
+		// elements in a ListView
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values);
+		setListAdapter(adapter);
 
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-	    listView.setOnItemClickListener(new OnItemClickListener() {
-	    	  @Override
-	    	  public void onItemClick(AdapterView<?> parent, View view,
-	    	    int position, long id) {
-	    		  
-	    		  
-	    	    Toast.makeText(getApplicationContext(),
-	    	      "Click ListItem Number " + position, Toast.LENGTH_LONG)
-	    	      .show();
-	    	  }
-	    	});
+				Object o = parent.getItemAtPosition(position);
+				String text = o.toString();
+				Intent i = getIntent();
+
+				i.putExtra("favWord", text);
+
+				setResult(RESULT_OK, i);
+
+				finish();
+
+				//Toast.makeText(getApplicationContext(), "Click item : " + text + " : " + position, Toast.LENGTH_LONG).show();
+			}
+		});
 	}
 
 	/**

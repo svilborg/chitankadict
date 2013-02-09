@@ -106,6 +106,9 @@ public class MainActivity extends SherlockActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+
+		Log.d(this.getPackageName(), "ON CREATE");
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
@@ -236,6 +239,8 @@ public class MainActivity extends SherlockActivity {
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		Word currWord = (Word) savedInstanceState.getSerializable("currentWord");
 
+		Log.d(this.getPackageName(), "ON RESTORE INSTANCE");
+
 		if (currWord == null) {
 			cleanWord();
 		} else {
@@ -314,14 +319,37 @@ public class MainActivity extends SherlockActivity {
 		case R.id.menu_item_favorites:
 
 			Intent favIntent = new Intent(MainActivity.this, FavoritesActivity.class);
-			MainActivity.this.startActivity(favIntent);
+
+			startActivityForResult(favIntent, 1);
 			return true;
 		}
 		return false;
 	}
 
-	private void addFavorite () {
-		if(currentWord !=null) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if ((resultCode == RESULT_OK)) {
+			super.onActivityResult(requestCode, resultCode, data);
+
+			if (data.getExtras().containsKey("favWord")) {
+				Log.d(getPackageName(), "FAV :::::" + data.getStringExtra("favWord"));
+
+				datasource.open();
+
+				Word word = datasource.getWord(data.getStringExtra("favWord"));
+
+				Log.d(getPackageName(), "WORD :::" + word);
+
+				cleanWord();
+
+				loadWord(word);
+			}
+
+			Log.d(this.getPackageName(), "Result :: " + String.valueOf(requestCode) + " / " + String.valueOf(resultCode) + "/" + data.getExtras().toString());
+		}
+	}
+
+	private void addFavorite() {
+		if (currentWord != null) {
 			datasource.create(currentWord);
 		}
 	}

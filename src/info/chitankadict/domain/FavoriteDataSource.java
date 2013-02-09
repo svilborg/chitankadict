@@ -5,6 +5,8 @@ import info.chitankadict.app.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -41,8 +43,13 @@ public class FavoriteDataSource {
 			values.put(DbHelper.COLUMN_NAME, word.getName());
 			values.put(DbHelper.COLUMN_TITLE, word.getTitle());
 			values.put(DbHelper.COLUMN_MEANING, word.getMeaning());
-			// values.put(DbHelper.COLUMN_SYNONYMS, word.getSynonyms());
 			values.put(DbHelper.COLUMN_MISSPELS, word.getMisspells());
+
+			ArrayList<String> wordSyns = word.getSynonyms();
+
+			JSONArray jsonSyns = new JSONArray(wordSyns);
+
+			values.put(DbHelper.COLUMN_SYNONYMS, jsonSyns.toString());
 
 			long insertId = database.insert(DbHelper.TABLE, null, values);
 
@@ -64,6 +71,22 @@ public class FavoriteDataSource {
 		database.delete(DbHelper.TABLE, DbHelper.COLUMN_NAME + " = " + name, null);
 	}
 
+	public Word getWord(String name) {
+		Word word = new Word();
+
+		Cursor cursor = database.query(DbHelper.TABLE, allColumns, DbHelper.COLUMN_NAME + " = ? ", new String[] { name }, null, null, null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			word = cursorToWord(cursor);
+			cursor.moveToNext();
+		}
+
+		// Make sure to close the cursor
+		cursor.close();
+		return word;
+	}
+
 	public List<Word> getAllFavorites() {
 		List<Word> words = new ArrayList<Word>();
 
@@ -75,6 +98,7 @@ public class FavoriteDataSource {
 			words.add(word);
 			cursor.moveToNext();
 		}
+
 		// Make sure to close the cursor
 		cursor.close();
 		return words;
@@ -87,7 +111,7 @@ public class FavoriteDataSource {
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
-			//Word word = cursorToWord(cursor);
+			// Word word = cursorToWord(cursor);
 			if (cursor != null && cursor.getString(0) != null) {
 				names.add(cursor.getString(0));
 			}
@@ -101,13 +125,13 @@ public class FavoriteDataSource {
 	private Word cursorToWord(Cursor cursor) {
 		Word word = new Word();
 
-		//Log.d(MainActivity.class.getName(), cursor.toString());
+		// Log.d(MainActivity.class.getName(), cursor.toString());
 
 		if (cursor != null && cursor.getString(0) != null) {
 			word.setName(cursor.getString(0));
 			word.setTitle(cursor.getString(1));
 			word.setMeaning(cursor.getString(2));
-			//word.set(cursor.getString(2));
+			// word.set(cursor.getString(2));
 			word.setMisspells(cursor.getString(4));
 		}
 
