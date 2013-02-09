@@ -8,7 +8,7 @@
 
     <string name="word">Word</string>
     <string name="meaning">Meaning</string>
-    <string name="synonims">Synonyms</string>
+    <string name="synonyms">Synonyms</string>
     <string name="misspells">Misspellings</string>
     <string name="misspell">Misspelling</string>
     <string name="error">Error</string>
@@ -21,6 +21,10 @@
     <string name="menu_favorites">Favorites</string>
     <string name="menu_about">About</string>
     <string name="dialog_cancel">Close</string>
+
+    <string name="error_favotires">Word already in favorites !</string>
+	<string name="success_favotires">Word added to favorites !</string>
+
     <string name="dialog_about"><![CDATA[ Online Bulgarian Dictionary for Android  -
         <a href="http://rechnik.chitanka.info/">http://rechnik.chitanka.info/</a> ]]>
     </string>

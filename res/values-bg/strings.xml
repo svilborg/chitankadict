@@ -8,7 +8,7 @@
 
     <string name="word">Дума</string>
     <string name="meaning">Значение</string>
-    <string name="synonims">Синоними</string>
+    <string name="synonyms">Синоними</string>
     <string name="misspells">Грешни изписвания</string>
     <string name="misspell">Грешно изписване</string>
     <string name="error">Грешка</string>
@@ -21,6 +21,10 @@
     <string name="menu_favorites">Любими</string>
     <string name="menu_about">Относно</string>
     <string name="dialog_cancel">Затвори</string>
+
+    <string name="error_favotires">Думата е вече добавена !</string>
+	<string name="success_favotires">Думата е успешно добавена !</string>
+
     <string name="dialog_about"><![CDATA[ Речник на българския език за Андроид на "Моята библиотека" Читанка  -
         <a href="http://rechnik.chitanka.info/">http://rechnik.chitanka.info/</a> ]]>
     </string>

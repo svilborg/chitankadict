@@ -33,7 +33,7 @@ public class FavoriteDataSource {
 		dbHelper.close();
 	}
 
-	public Word create(Word word) {
+	public Word createAndGet (Word word) {
 		Word newWord = new Word();
 
 		if (word != null && word.getName() != null) {
@@ -51,9 +51,7 @@ public class FavoriteDataSource {
 
 			values.put(DbHelper.COLUMN_SYNONYMS, jsonSyns.toString());
 
-			long insertId = database.insert(DbHelper.TABLE, null, values);
-
-			Log.d(MainActivity.class.getSimpleName(), "LAST INSERT ID ::" + insertId);
+			database.insertOrThrow(DbHelper.TABLE, null, values);
 
 			Cursor cursor = database.query(DbHelper.TABLE, allColumns, DbHelper.COLUMN_NAME + " = ? ", new String[] { word.getName() }, null, null, null);
 			cursor.moveToFirst();
@@ -63,6 +61,32 @@ public class FavoriteDataSource {
 		}
 
 		return newWord;
+	}
+
+	public long create(Word word) {
+		if (word != null && word.getName() != null) {
+
+			ContentValues values = new ContentValues();
+
+			values.put(DbHelper.COLUMN_NAME, word.getName());
+			values.put(DbHelper.COLUMN_TITLE, word.getTitle());
+			values.put(DbHelper.COLUMN_MEANING, word.getMeaning());
+			values.put(DbHelper.COLUMN_MISSPELS, word.getMisspells());
+
+			ArrayList<String> wordSyns = word.getSynonyms();
+
+			JSONArray jsonSyns = new JSONArray(wordSyns);
+
+			values.put(DbHelper.COLUMN_SYNONYMS, jsonSyns.toString());
+
+			long insertId = database.insertOrThrow(DbHelper.TABLE, null, values);
+
+			//Log.d(MainActivity.class.getSimpleName(), "LAST INSERT ID ::" + insertId);
+
+			return insertId;
+		}
+
+		return -1L;
 	}
 
 	public void delete(Word word) {

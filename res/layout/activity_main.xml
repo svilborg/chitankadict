@@ -99,7 +99,7 @@
                     android:freezesText="true"
                     android:padding="10dip"
                     android:singleLine="false"
-                    android:text="@string/synonims"
+                    android:text="@string/synonyms"
                     android:textColor="#eee"
                     android:textSize="20sp" />
 

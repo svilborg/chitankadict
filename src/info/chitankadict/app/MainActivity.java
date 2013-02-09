@@ -9,7 +9,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.http.protocol.HTTP;
 import org.jsoup.HttpStatusException;
@@ -23,6 +22,7 @@ import com.actionbarsherlock.widget.ShareActionProvider;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,6 +38,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.view.inputmethod.InputMethodManager;
 
 public class MainActivity extends SherlockActivity {
@@ -350,7 +351,15 @@ public class MainActivity extends SherlockActivity {
 
 	private void addFavorite() {
 		if (currentWord != null) {
-			datasource.create(currentWord);
+
+			try {
+				datasource.create(currentWord);
+
+				Toast.makeText(getApplicationContext(), getString(R.string.success_favotires), Toast.LENGTH_SHORT).show();
+
+			} catch (SQLiteConstraintException e) {
+				Toast.makeText(getApplicationContext(), getString(R.string.error_favotires), Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 
