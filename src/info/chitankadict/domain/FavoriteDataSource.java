@@ -20,7 +20,7 @@ public class FavoriteDataSource {
 	// Database fields
 	private SQLiteDatabase database;
 	private DbHelper dbHelper;
-	private String[] allColumns = { DbHelper.COLUMN_NAME, DbHelper.COLUMN_TITLE, DbHelper.COLUMN_MEANING, DbHelper.COLUMN_SYNONYMS, DbHelper.COLUMN_MISSPELS };
+	private String[] allColumns = { DbHelper.COLUMN_ID, DbHelper.COLUMN_NAME, DbHelper.COLUMN_TITLE, DbHelper.COLUMN_MEANING, DbHelper.COLUMN_SYNONYMS, DbHelper.COLUMN_MISSPELS, DbHelper.COLUMN_CREATED };
 
 	public FavoriteDataSource(Context context) {
 		dbHelper = new DbHelper(context);
