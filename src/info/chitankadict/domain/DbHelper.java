@@ -15,11 +15,13 @@ public class DbHelper extends SQLiteOpenHelper {
 
 	public static final String TABLE = "word";
 
+	public static final String COLUMN_ID = "id";
 	public static final String COLUMN_NAME = "name";
 	public static final String COLUMN_TITLE = "title";
 	public static final String COLUMN_MEANING = "meaning";
 	public static final String COLUMN_SYNONYMS = "synonyms";
 	public static final String COLUMN_MISSPELS = "misspells";
+	public static final String COLUMN_CREATED = "created";
 
 	public static final boolean debug = false;
 
@@ -38,9 +40,11 @@ public class DbHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		/* Create table Logic, once the Application has ran for the first time. */
-		String sql = String.format("CREATE TABLE %s ('name' varchar(100) DEFAULT NULL, 'title' longtext,'meaning' longtext, 'synonyms' longtext,'misspells' text, PRIMARY KEY ('name') );", TABLE);
+		String sql = String.format("CREATE TABLE %s ('id' integer NOT NULL, 'name' varchar(100) DEFAULT NULL, 'title' longtext,'meaning' longtext, 'synonyms' longtext,'misspells' text, created TIMESTAMP NOT NULL DEFAULT current_timestamp, PRIMARY KEY ('id') );", TABLE);
 
 		db.execSQL(sql);
+
+		db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS name_idx ON " + TABLE + " (" + COLUMN_NAME + ")");
 
 		if (debug) {
 			Log.d(TAG, "onCreate Called.");

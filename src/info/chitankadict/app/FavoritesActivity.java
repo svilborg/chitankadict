@@ -8,6 +8,7 @@ import java.util.List;
 import com.actionbarsherlock.app.SherlockListActivity;
 import com.actionbarsherlock.view.MenuItem;
 
+import info.chitankadict.domain.DbHelper;
 import info.chitankadict.domain.FavoriteDataSource;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,7 +43,7 @@ public class FavoritesActivity extends SherlockListActivity {
 
 		ListView listView = (ListView) findViewById(android.R.id.list);
 
-		List<String> values = datasource.getAllFavoriteNames();
+		List<String> values = datasource.getAllFavoriteNames(DbHelper.COLUMN_NAME);
 
 		// Use the SimpleCursorAdapter to show the
 		// elements in a ListView

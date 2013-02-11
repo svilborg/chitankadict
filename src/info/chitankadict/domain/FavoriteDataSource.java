@@ -131,10 +131,10 @@ public class FavoriteDataSource {
 		return words;
 	}
 
-	public List<String> getAllFavoriteNames() {
+	public List<String> getAllFavoriteNames(String order) {
 		List<String> names = new ArrayList<String>();
 
-		Cursor cursor = database.query(DbHelper.TABLE, new String[] { DbHelper.COLUMN_NAME }, null, null, null, null, null);
+		Cursor cursor = database.query(DbHelper.TABLE, new String[] { DbHelper.COLUMN_NAME }, null, null, null, null, order);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
