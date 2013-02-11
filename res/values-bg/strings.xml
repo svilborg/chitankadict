@@ -26,6 +26,7 @@
 
     <string name="error_favotires">Думата е вече добавена !</string>
 	<string name="success_favotires">Думата е успешно добавена !</string>
+	<string name="success_remove_favotires">Думата е успешно премахната !</string>
 
     <string name="dialog_about"><![CDATA[ Речник на българския език за Андроид на "Моята библиотека" Читанка  -
         <a href="http://rechnik.chitanka.info/">http://rechnik.chitanka.info/</a> ]]>

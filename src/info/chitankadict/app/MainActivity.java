@@ -373,8 +373,9 @@ public class MainActivity extends SherlockActivity {
 		if (currentWord != null) {
 			try {
 				datasource.delete(currentWord.getName());
+
+				Toast.makeText(getApplicationContext(), getString(R.string.success_remove_favotires), Toast.LENGTH_SHORT).show();
 			} catch (Exception e) {
-				// TODO: handle exception
 			}
 		}
 	}
