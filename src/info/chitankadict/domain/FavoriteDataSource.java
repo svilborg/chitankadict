@@ -152,12 +152,12 @@ public class FavoriteDataSource {
 	private Word cursorToWord(Cursor cursor) {
 		Word word = new Word();
 
-		if (cursor != null && cursor.getString(0) != null) {
-			word.setName(cursor.getString(0));
-			word.setTitle(cursor.getString(1));
-			word.setMeaning(cursor.getString(2));
+		if (cursor != null && cursor.getString(1) != null) {
+			word.setName(cursor.getString(1));
+			word.setTitle(cursor.getString(2));
+			word.setMeaning(cursor.getString(3));
 
-			String synJson = cursor.getString(3);
+			String synJson = cursor.getString(4);
 
 			if (synJson != null) {
 				try {
@@ -173,7 +173,7 @@ public class FavoriteDataSource {
 				}
 			}
 
-			word.setMisspells(cursor.getString(4));
+			word.setMisspells(cursor.getString(5));
 		}
 
 		return word;

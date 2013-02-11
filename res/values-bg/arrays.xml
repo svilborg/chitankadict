@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="order">
+        <item>А-Я</item>
+        <item>Я-А</item>
+        <item>Най-нови</item>
+        <item>Най-стари</item>
+    </string-array>
+</resources>
