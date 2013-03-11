@@ -24,11 +24,12 @@
     <string name="menu_about">About</string>
     <string name="dialog_cancel">Close</string>
 
+
     <string name="error_favotires">Word already in favorites !</string>
 	<string name="success_favotires">Word added to favorites !</string>
 	<string name="success_remove_favotires">Word removed from favorites !</string>
 
-    <string name="dialog_about"><![CDATA[ Online Bulgarian Dictionary for Android  -
+    <string name="dialog_about"><![CDATA[ Bg Dictionary is an Online Bulgarian Dictionary -
         <a href="http://rechnik.chitanka.info/">http://rechnik.chitanka.info/</a> ]]>
     </string>
 </resources>
