@@ -1,3 +1,4 @@
 h1. Chitanka Dictionary
 
 Chitanka Dictionary - Online Bulgarian Dictionary Android
+<a href="http://rechnik.chitanka.info/">http://rechnik.chitanka.info/</a>
